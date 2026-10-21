@@ -1,0 +1,1092 @@
+import { auth, db } from "./firebase-config.js";
+
+import {
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+import {
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+  updateDoc,
+  arrayUnion,
+  runTransaction,
+  Timestamp,
+  serverTimestamp,
+  deleteField,
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+// ==========================================
+// ELEMENTS AND STATE
+// ==========================================
+
+const orderTableBody = document.getElementById("orderTableBody");
+const searchInput = document.getElementById("orderSearchInput");
+const statusFilter = document.getElementById("statusFilterSelect");
+const filterToggleBtn = document.getElementById("filterToggleBtn");
+const filterPanel = document.getElementById("filterPanel");
+const selectAllCheckbox = document.getElementById("selectAll");
+const emptyState = document.getElementById("emptyState");
+const mainContent = document.querySelector(".main-content");
+
+let orders = [];
+let unsubscribeOrders = null;
+const savingOrders = new Set();
+
+// ==========================================
+// ORDER VIEW STATE
+// ==========================================
+
+let orderView = "active";
+
+let riders = [];
+let currentRole = null;
+
+const STATUS_LABELS = {
+  placed: "Placed",
+  preparing: "Preparing",
+  ready_for_pickup: "Ready for Pickup",
+  rider_assigned: "Rider Assigned",
+  picked_up: "Picked Up",
+  on_the_way: "On the Way",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
+};
+
+// Only allow the next kitchen preparation stage.
+const NEXT_STATUS = {
+  placed: "preparing",
+  preparing: "ready_for_pickup",
+};
+
+// ==========================================
+// HELPERS
+// ==========================================
+
+function formatDate(timestamp) {
+  if (!timestamp?.toDate) return "-";
+
+  return timestamp.toDate().toLocaleString("en-PH", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+}
+
+function createCell(className = "") {
+  const cell = document.createElement("td");
+  if (className) cell.className = className;
+  return cell;
+}
+
+function createStatusControl(order) {
+  const currentStatus = order.orderStatus || "placed";
+  const nextStatus = NEXT_STATUS[currentStatus];
+
+  // Rider and completed stages are read-only here.
+  if (!nextStatus) {
+    const badge = document.createElement("span");
+    badge.className = `status-dropdown ${currentStatus}`;
+    badge.textContent = STATUS_LABELS[currentStatus] || "Unknown";
+    return badge;
+  }
+
+  const select = document.createElement("select");
+  select.className = `status-dropdown ${currentStatus}`;
+  select.dataset.orderId = order.id;
+  select.dataset.currentStatus = currentStatus;
+
+  for (const value of [currentStatus, nextStatus]) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = STATUS_LABELS[value];
+    select.appendChild(option);
+  }
+
+  select.value = currentStatus;
+  select.disabled = savingOrders.has(order.id);
+
+  return select;
+}
+
+async function assignRider(orderId, riderId) {
+  const order = orders.find((item) => item.id === orderId);
+  const rider = riders.find((item) => item.id === riderId);
+
+  if (!order || !rider) {
+    alert("Order or rider not found.");
+    return;
+  }
+
+  if (order.orderStatus !== "ready_for_pickup") {
+    alert("The order must be ready for pickup first.");
+    return;
+  }
+
+  if (rider.status !== "active") {
+    alert("This rider is not active.");
+    return;
+  }
+
+  const riderName =
+    [rider.firstName || "", rider.lastName || ""].join(" ").trim() ||
+    "Assigned rider";
+
+  const confirmed = confirm(`Assign ${riderName} to ${order.orderNumber}?`);
+
+  if (!confirmed) {
+    renderOrders();
+    return;
+  }
+
+  if (savingOrders.has(orderId)) return;
+
+  savingOrders.add(orderId);
+  renderOrders();
+
+  try {
+    const orderRef = doc(db, "orders", orderId);
+    const latest = await getDoc(orderRef);
+
+    if (!latest.exists() || latest.data().orderStatus !== "ready_for_pickup") {
+      throw new Error("This order is no longer ready for pickup.");
+    }
+
+    await updateDoc(orderRef, {
+      assignedRiderId: rider.id,
+      assignedRiderName: riderName,
+      orderStatus: "rider_assigned",
+      statusHistory: arrayUnion({
+        status: "rider_assigned",
+        at: Timestamp.now(),
+      }),
+      updatedAt: serverTimestamp(),
+    });
+
+    alert(`Successfully assigned ${riderName}.`);
+  } catch (error) {
+    console.error("Rider assignment failed:", error);
+    alert(error.message || "Unable to assign rider.");
+  } finally {
+    savingOrders.delete(orderId);
+    renderOrders();
+  }
+}
+
+function riderControl(order) {
+  const cell = document.createElement("td");
+
+  if (order.assignedRiderId) {
+    cell.textContent = order.assignedRiderName || "Assigned rider";
+    return cell;
+  }
+
+  if (order.orderStatus !== "ready_for_pickup") {
+    cell.textContent = "—";
+    return cell;
+  }
+
+  if (currentRole !== "admin") {
+    cell.textContent = "Admin assignment required";
+    return cell;
+  }
+
+  const select = document.createElement("select");
+  select.className = "status-dropdown";
+  select.dataset.assignOrderId = order.id;
+
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = riders.length ? "Assign Rider" : "No active riders";
+  select.append(placeholder);
+
+  for (const rider of riders) {
+    const option = document.createElement("option");
+    option.value = rider.id;
+    option.textContent =
+      `${rider.firstName || ""} ${rider.lastName || ""}`.trim() || rider.id;
+    select.append(option);
+  }
+
+  select.disabled = savingOrders.has(order.id) || !riders.length;
+  cell.append(select);
+  return cell;
+}
+
+// ==========================================
+// ARCHIVE ORDER (ADMIN ONLY)
+// ==========================================
+
+async function archiveOrder(orderId) {
+  if (currentRole !== "admin") {
+    alert("Only administrators can archive orders.");
+    return;
+  }
+
+  const order = orders.find((item) => item.id === orderId);
+
+  if (!order || savingOrders.has(orderId)) return;
+
+  // Only archive completed or cancelled orders.
+  if (!["delivered", "cancelled"].includes(order.orderStatus)) {
+    alert("Only delivered or cancelled orders can be archived.");
+    return;
+  }
+
+  const confirmed = window.confirm(
+    `Archive order #${order.orderNumber || orderId}?\n\n` +
+      "This order will be hidden from the active list, but its records will be preserved.",
+  );
+
+  if (!confirmed) return;
+
+  savingOrders.add(orderId);
+  renderOrders();
+
+  try {
+    const orderRef = doc(db, "orders", orderId);
+    const latest = await getDoc(orderRef);
+
+    if (!latest.exists()) {
+      throw new Error("Order no longer exists.");
+    }
+
+    if (!["delivered", "cancelled"].includes(latest.data().orderStatus)) {
+      throw new Error("This order is not yet eligible for archiving.");
+    }
+
+    if (latest.data().archived === true) {
+      throw new Error("This order has already been archived.");
+    }
+
+    if (!auth.currentUser) {
+      throw new Error("Administrator is not signed in.");
+    }
+
+    await updateDoc(orderRef, {
+      archived: true,
+      archivedAt: serverTimestamp(),
+      archivedBy: auth.currentUser.uid,
+    });
+
+    alert("Order archived successfully.");
+  } catch (error) {
+    console.error("Unable to archive order:", error);
+    alert(error.message || "Unable to archive order.");
+  } finally {
+    savingOrders.delete(orderId);
+    renderOrders();
+  }
+}
+
+// ==========================================
+// RESTORE ARCHIVED ORDER
+// ==========================================
+
+async function restoreOrder(orderId) {
+  // Only administrators can restore orders.
+  if (currentRole !== "admin") {
+    alert("Only administrators can restore orders.");
+    return;
+  }
+
+  const order = orders.find((item) => item.id === orderId);
+
+  if (!order || savingOrders.has(orderId)) {
+    return;
+  }
+
+  if (order.archived !== true) {
+    alert("This order is not archived.");
+    return;
+  }
+
+  const confirmed = window.confirm(
+    `Restore order #${order.orderNumber || orderId}?\n\n` +
+      "This order will return to the active orders list.",
+  );
+
+  if (!confirmed) return;
+
+  savingOrders.add(orderId);
+  renderOrders();
+
+  try {
+    const orderRef = doc(db, "orders", orderId);
+
+    // Check the latest order data before restoring.
+    const latest = await getDoc(orderRef);
+
+    if (!latest.exists()) {
+      throw new Error("Order no longer exists.");
+    }
+
+    if (latest.data().archived !== true) {
+      throw new Error("This order is not archived.");
+    }
+
+    if (!auth.currentUser) {
+      throw new Error("Administrator is not signed in.");
+    }
+
+    // Restore the order without deleting its records.
+    await updateDoc(orderRef, {
+      archived: false,
+      archivedAt: deleteField(),
+      archivedBy: deleteField(),
+    });
+
+    alert("Order restored successfully.");
+  } catch (error) {
+    console.error("Unable to restore order:", error);
+    alert(error.message || "Unable to restore order.");
+  } finally {
+    savingOrders.delete(orderId);
+    renderOrders();
+  }
+}
+
+function printOrderDocument(orderId, type) {
+  const order = orders.find((item) => item.id === orderId);
+
+  if (!order) {
+    alert("Order not found. Please refresh the Orders page.");
+    return;
+  }
+
+  if (!["invoice", "packing"].includes(type)) {
+    return;
+  }
+
+  const printWindow = window.open("", "_blank", "width=850,height=900");
+
+  if (!printWindow) {
+    alert("Please allow pop-ups to print this document.");
+    return;
+  }
+
+  const documentType = type === "invoice" ? "ORDER INVOICE" : "PACKING SLIP";
+
+  const money = (value) =>
+    new Intl.NumberFormat("en-PH", {
+      style: "currency",
+      currency: "PHP",
+    }).format(Number(value) || 0);
+
+  const customer = order.customer || {};
+  const address = order.deliveryAddress || {};
+
+  const customerName =
+    [customer.firstName, customer.lastName].filter(Boolean).join(" ") ||
+    "Customer";
+
+  const fullAddress = [
+    address.address,
+    address.barangay,
+    address.city,
+    address.province,
+    address.postalCode,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  const items = Array.isArray(order.items) ? order.items : [];
+
+  const printDoc = printWindow.document;
+  printDoc.title = `${documentType} - ${order.orderNumber || order.id}`;
+
+  const style = printDoc.createElement("style");
+  style.textContent = `
+    @page { size: A4; margin: 15mm; }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #222;
+      margin: 30px;
+      font-size: 13px;
+    }
+
+    h1 { font-size: 26px; margin: 0; }
+    h2 { font-size: 18px; margin: 12px 0; }
+    h3 { font-size: 13px; margin-bottom: 6px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 3px solid #e53935;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    .brand { color: #d32f2f; font-weight: bold; }
+    .muted { color: #666; }
+    .section { margin: 20px 0; }
+
+    .details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 6px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: #f5f5f5; }
+    .right { text-align: right; }
+    .center { text-align: center; }
+    .item-option { font-size: 11px; color: #666; margin-top: 4px; }
+    .totals { margin: 20px 0 0 auto; width: 280px; }
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+    }
+
+    .grand-total {
+      border-top: 2px solid #222;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .footer {
+      border-top: 1px solid #ddd;
+      margin-top: 40px;
+      padding-top: 15px;
+      text-align: center;
+      color: #777;
+    }
+
+    .check-box {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 1px solid #333;
+    }
+
+    tr { break-inside: avoid; }
+
+    @media print {
+      body { margin: 0; }
+    }
+  `;
+  printDoc.head.appendChild(style);
+
+  const root = printDoc.createElement("main");
+  printDoc.body.appendChild(root);
+
+  // Use textContent for Firestore data to avoid HTML injection.
+  function element(tag, text, className, parent = root) {
+    const node = printDoc.createElement(tag);
+    node.textContent = String(text ?? "");
+    if (className) node.className = className;
+    parent.appendChild(node);
+    return node;
+  }
+
+  function detail(label, value, parent) {
+    const wrapper = element("div", "", "", parent);
+    element("strong", label, "", wrapper);
+    element("p", value || "—", "", wrapper);
+  }
+
+  const header = element("header", "", "header");
+  const brand = element("div", "", "", header);
+  element("h1", "OVEN2DOOR", "brand", brand);
+  element("p", "Fresh pizza, delivered to your door.", "muted", brand);
+
+  const heading = element("div", "", "", header);
+  element("h2", documentType, "", heading);
+  element("p", order.orderNumber || order.id, "", heading);
+  element("p", formatDate(order.createdAt), "muted", heading);
+
+  const details = element("section", "", "details section");
+
+  const customerBox = element("div", "", "", details);
+  element("h3", "CUSTOMER INFORMATION", "", customerBox);
+  detail("Name", customerName, customerBox);
+  detail("Phone", customer.phone, customerBox);
+  detail("Email", customer.email, customerBox);
+
+  const deliveryBox = element("div", "", "", details);
+  element("h3", "DELIVERY INFORMATION", "", deliveryBox);
+  detail("Address", fullAddress, deliveryBox);
+  detail("Order status", order.orderStatus || "placed", deliveryBox);
+
+  if (type === "invoice") {
+    const paymentBox = element("section", "", "section");
+    element("h3", "PAYMENT INFORMATION", "", paymentBox);
+    detail(
+      "Payment method",
+      order.paymentMethod === "cod"
+        ? "Cash on Delivery"
+        : String(order.paymentMethod || "Not specified").toUpperCase(),
+      paymentBox,
+    );
+    detail("Payment status", order.paymentStatus || "pending", paymentBox);
+  }
+
+  const itemsSection = element("section", "", "section");
+  element(
+    "h3",
+    type === "invoice" ? "ORDER ITEMS" : "ITEMS TO PACK",
+    "",
+    itemsSection,
+  );
+
+  const table = element("table", "", "", itemsSection);
+  const thead = element("thead", "", "", table);
+  const headingRow = element("tr", "", "", thead);
+
+  const headings =
+    type === "invoice"
+      ? ["Product", "Qty", "Unit Price", "Amount"]
+      : ["Check", "Product / Options", "Quantity"];
+
+  headings.forEach((heading) => {
+    element("th", heading, "", headingRow);
+  });
+
+  const tbody = element("tbody", "", "", table);
+
+  for (const item of items) {
+    const row = element("tr", "", "", tbody);
+
+    if (type === "packing") {
+      const checkCell = element("td", "", "", row);
+      element("span", "", "check-box", checkCell);
+    }
+
+    const productCell = element("td", "", "", row);
+    element("strong", item.productName || "Product", "", productCell);
+
+    const options = [];
+
+    if (item.size?.name) options.push(`Size: ${item.size.name}`);
+    if (item.crust?.name) options.push(`Crust: ${item.crust.name}`);
+
+    if (Array.isArray(item.toppings) && item.toppings.length) {
+      options.push(
+        `Toppings: ${item.toppings.map((t) => t.name || "Topping").join(", ")}`,
+      );
+    }
+
+    if (options.length) {
+      element("div", options.join(" | "), "item-option", productCell);
+    }
+
+    element("td", item.quantity ?? 1, "center", row);
+
+    if (type === "invoice") {
+      element("td", money(item.unitPrice), "right", row);
+      element("td", money(item.subtotal), "right", row);
+    }
+  }
+
+  if (type === "invoice") {
+    const totals = element("section", "", "totals");
+
+    function totalRow(label, value, extraClass = "") {
+      const row = element("div", "", `total-row ${extraClass}`, totals);
+      element("span", label, "", row);
+      element("span", money(value), "", row);
+    }
+
+    totalRow("Subtotal", order.subtotal);
+    totalRow("Delivery Fee", order.deliveryFee);
+    totalRow("Discount", -(Number(order.discount) || 0));
+    totalRow("TOTAL", order.total, "grand-total");
+  } else {
+    const totalQuantity = items.reduce(
+      (sum, item) => sum + (Number(item.quantity) || 0),
+      0,
+    );
+
+    element("p", `Total items to pack: ${totalQuantity}`, "section");
+
+    element(
+      "p",
+      "Packed by: ____________________    Date/Time: ____________________",
+      "section",
+    );
+  }
+
+  const footer = element("footer", "", "footer");
+  element(
+    "p",
+    type === "invoice"
+      ? "Thank you for ordering from Oven2Door!"
+      : "Verify all items and options before dispatch.",
+    "",
+    footer,
+  );
+
+  // Wait for the print document to render.
+  printWindow.focus();
+
+  setTimeout(() => {
+    printWindow.print();
+  }, 400);
+}
+
+// ==========================================
+// RENDER ORDERS
+// ==========================================
+
+function renderOrders() {
+  const search = searchInput?.value.trim().toLowerCase() || "";
+  const selectedStatus = statusFilter?.value || "all";
+
+  const filtered = orders.filter((order) => {
+    // Display orders according to the selected tab.
+    const isArchived = order.archived === true;
+
+    if (orderView === "active" && isArchived) {
+      return false;
+    }
+
+    if (orderView === "archived" && !isArchived) {
+      return false;
+    }
+
+    const customer = order.customer || {};
+
+    const customerName = [
+      customer.firstName || "",
+      customer.lastName || "",
+    ].join(" ");
+
+    const searchable = [order.orderNumber || "", order.id, customerName]
+      .join(" ")
+      .toLowerCase();
+
+    return (
+      searchable.includes(search) &&
+      (selectedStatus === "all" || order.orderStatus === selectedStatus)
+    );
+  });
+
+  orderTableBody.replaceChildren();
+  emptyState.style.display = filtered.length ? "none" : "flex";
+
+  for (const order of filtered) {
+    const row = document.createElement("tr");
+
+    // Checkbox
+    const checkboxCell = createCell("checkbox-col");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "row-select";
+    checkboxCell.appendChild(checkbox);
+
+    // Order number and customer
+    const orderCell = createCell();
+    const orderInfo = document.createElement("div");
+    orderInfo.className = "order-info-cell";
+
+    const orderNumber = document.createElement("span");
+    orderNumber.className = "order-id";
+    orderNumber.textContent = `#${order.orderNumber || order.id}`;
+
+    const customerName = document.createElement("small");
+    customerName.textContent = [
+      order.customer?.firstName || "",
+      order.customer?.lastName || "",
+    ]
+      .join(" ")
+      .trim();
+
+    orderInfo.append(orderNumber, customerName);
+    orderCell.appendChild(orderInfo);
+
+    // Date
+    const dateCell = createCell("date-cell");
+    dateCell.textContent = formatDate(order.createdAt);
+
+    // Status
+    const statusCell = createCell();
+    statusCell.appendChild(createStatusControl(order));
+
+    // ==========================================
+    // ARCHIVE / RESTORE ORDER BUTTONS
+    // ==========================================
+
+    const actionsCell = createCell("actions-cell");
+
+    // PRINT INVOICE
+    const invoiceButton = document.createElement("button");
+
+    invoiceButton.type = "button";
+    invoiceButton.className = "print-invoice-btn";
+    invoiceButton.textContent = "Print Invoice";
+    invoiceButton.dataset.printInvoiceId = order.id;
+
+    actionsCell.appendChild(invoiceButton);
+
+    // PRINT PACKING SLIP
+    const packingButton = document.createElement("button");
+
+    packingButton.type = "button";
+    packingButton.className = "print-packing-btn";
+    packingButton.textContent = "Packing Slip";
+    packingButton.dataset.printPackingId = order.id;
+
+    actionsCell.appendChild(packingButton);
+
+    if (currentRole === "admin") {
+      if (order.archived === true) {
+        // RESTORE BUTTON
+        const restoreButton = document.createElement("button");
+
+        restoreButton.type = "button";
+        restoreButton.className = "restore-order-btn";
+        restoreButton.textContent = "Restore";
+        restoreButton.dataset.restoreOrderId = order.id;
+
+        restoreButton.disabled = savingOrders.has(order.id);
+
+        restoreButton.title = "Restore this order to the active orders list.";
+
+        actionsCell.appendChild(restoreButton);
+      } else {
+        // ARCHIVE BUTTON
+        const archiveButton = document.createElement("button");
+
+        archiveButton.type = "button";
+        archiveButton.className = "archive-order-btn";
+        archiveButton.textContent = "Archive";
+        archiveButton.dataset.archiveOrderId = order.id;
+
+        const canArchive = ["delivered", "cancelled"].includes(
+          order.orderStatus,
+        );
+
+        archiveButton.disabled = !canArchive || savingOrders.has(order.id);
+
+        if (!canArchive) {
+          archiveButton.title =
+            "Only delivered or cancelled orders can be archived.";
+        }
+
+        actionsCell.appendChild(archiveButton);
+      }
+    }
+
+    // ==========================================
+    // APPEND TABLE CELLS
+    // ==========================================
+
+    row.append(
+      checkboxCell,
+      orderCell,
+      dateCell,
+      statusCell,
+      riderControl(order),
+      actionsCell,
+    );
+
+    orderTableBody.appendChild(row);
+  }
+}
+
+// ==========================================
+// ACTIVE / ARCHIVED ORDER TAB SWITCHING
+// ==========================================
+
+const activeOrdersBtn = document.getElementById("activeOrdersBtn");
+const archivedOrdersBtn = document.getElementById("archivedOrdersBtn");
+
+function switchOrderView(view) {
+  orderView = view;
+
+  // Update active button styling
+  activeOrdersBtn?.classList.toggle("active", view === "active");
+  archivedOrdersBtn?.classList.toggle("active", view === "archived");
+
+  // Refresh the table
+  renderOrders();
+}
+
+activeOrdersBtn?.addEventListener("click", () => {
+  switchOrderView("active");
+});
+
+archivedOrdersBtn?.addEventListener("click", () => {
+  switchOrderView("archived");
+});
+
+// ==========================================
+// SAVE ORDER STATUS
+// ==========================================
+
+async function updateOrderStatus(orderId, nextStatus) {
+  const order = orders.find((item) => item.id === orderId);
+
+  if (!order || savingOrders.has(orderId)) return;
+
+  const currentStatus = order.orderStatus;
+
+  if (NEXT_STATUS[currentStatus] !== nextStatus) {
+    alert("This status change is not permitted.");
+    return;
+  }
+
+  const confirmed = window.confirm(
+    `Change ${order.orderNumber || orderId} from ` +
+      `${STATUS_LABELS[currentStatus]} to ${STATUS_LABELS[nextStatus]}?`,
+  );
+
+  if (!confirmed) {
+    renderOrders();
+    return;
+  }
+
+  savingOrders.add(orderId);
+  renderOrders();
+
+  try {
+    // Re-read the order to avoid updating a stale status.
+    const orderRef = doc(db, "orders", orderId);
+    const latest = await getDoc(orderRef);
+
+    if (!latest.exists() || latest.data().orderStatus !== currentStatus) {
+      throw new Error(
+        "The order status has already changed. Please try again.",
+      );
+    }
+
+    await updateDoc(orderRef, {
+      orderStatus: nextStatus,
+      statusHistory: arrayUnion({
+        status: nextStatus,
+        at: Timestamp.now(),
+      }),
+      updatedAt: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error("Unable to update order status:", error);
+
+    alert(error.message || "Unable to update order status.");
+  } finally {
+    savingOrders.delete(orderId);
+    renderOrders();
+  }
+}
+
+// ==========================================
+// EVENTS
+// ==========================================
+
+filterToggleBtn?.addEventListener("click", () => {
+  filterPanel?.classList.toggle("show");
+});
+
+searchInput?.addEventListener("input", renderOrders);
+statusFilter?.addEventListener("change", renderOrders);
+
+selectAllCheckbox?.addEventListener("change", () => {
+  orderTableBody.querySelectorAll(".row-select").forEach((checkbox) => {
+    checkbox.checked = selectAllCheckbox.checked;
+  });
+});
+
+orderTableBody?.addEventListener("change", (event) => {
+  // ==========================================
+  // RIDER ASSIGNMENT
+  // ==========================================
+
+  const riderSelect = event.target.closest("select[data-assign-order-id]");
+
+  if (riderSelect) {
+    if (riderSelect.value) {
+      assignRider(riderSelect.dataset.assignOrderId, riderSelect.value);
+    }
+
+    return;
+  }
+
+  // ==========================================
+  // ORDER STATUS UPDATE
+  // ==========================================
+
+  const statusSelect = event.target.closest("select[data-order-id]");
+
+  if (statusSelect) {
+    updateOrderStatus(statusSelect.dataset.orderId, statusSelect.value);
+  }
+});
+
+// ==========================================
+// ARCHIVE ORDER BUTTON CLICK
+// ==========================================
+// ==========================================
+// ARCHIVE / RESTORE ORDER CLICK EVENTS
+// ==========================================
+
+orderTableBody?.addEventListener("click", (event) => {
+  const invoiceButton = event.target.closest("button[data-print-invoice-id]");
+
+  if (invoiceButton) {
+    printOrderDocument(invoiceButton.dataset.printInvoiceId, "invoice");
+    return;
+  }
+
+  const packingButton = event.target.closest("button[data-print-packing-id]");
+
+  if (packingButton) {
+    printOrderDocument(packingButton.dataset.printPackingId, "packing");
+    return;
+  }
+  // Handle Archive button
+  const archiveButton = event.target.closest("button[data-archive-order-id]");
+
+  if (archiveButton && !archiveButton.disabled) {
+    const orderId = archiveButton.dataset.archiveOrderId;
+
+    if (orderId) {
+      archiveOrder(orderId);
+    }
+
+    return;
+  }
+
+  // Handle Restore button
+  const restoreButton = event.target.closest("button[data-restore-order-id]");
+
+  if (restoreButton && !restoreButton.disabled) {
+    const orderId = restoreButton.dataset.restoreOrderId;
+
+    if (orderId) {
+      restoreOrder(orderId);
+    }
+  }
+});
+
+document
+  .querySelector("[data-logout]")
+  ?.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    await signOut(auth);
+    window.location.replace("/login");
+  });
+
+// ==========================================
+// AUTHENTICATION AND REAL-TIME ORDERS
+// ==========================================
+
+if (mainContent) {
+  mainContent.style.visibility = "hidden";
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (unsubscribeOrders) {
+    unsubscribeOrders();
+    unsubscribeOrders = null;
+  }
+
+  if (!user) {
+    window.location.replace("/login");
+    return;
+  }
+
+  try {
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    const profile = userDoc.data();
+
+    if (
+      !userDoc.exists() ||
+      !["admin", "staff"].includes(profile.role) ||
+      profile.status !== "active"
+    ) {
+      window.location.replace("/home");
+      return;
+    }
+
+    // ==========================================
+    // LOAD ACTIVE RIDERS FROM FIREBASE
+    // ==========================================
+
+    currentRole = profile.role;
+
+    if (currentRole === "admin") {
+      const ridersQuery = query(
+        collection(db, "users"),
+        where("role", "==", "rider"),
+        where("status", "==", "active"),
+      );
+
+      onSnapshot(
+        ridersQuery,
+        (snapshot) => {
+          riders = snapshot.docs.map((item) => ({
+            id: item.id,
+            ...item.data(),
+          }));
+
+          renderOrders();
+        },
+        (error) => {
+          console.error("Unable to load riders:", error);
+        },
+      );
+    }
+
+    if (profile.role === "staff") {
+      document.querySelectorAll("[data-admin-only]").forEach((link) => {
+        link.remove();
+      });
+    }
+
+    if (mainContent) {
+      mainContent.style.visibility = "visible";
+    }
+
+    const ordersQuery = query(
+      collection(db, "orders"),
+      orderBy("updatedAt", "desc"),
+    );
+
+    unsubscribeOrders = onSnapshot(
+      ordersQuery,
+      (snapshot) => {
+        orders = snapshot.docs.map((item) => ({
+          id: item.id,
+          ...item.data(),
+        }));
+
+        renderOrders();
+      },
+      (error) => {
+        console.error("Unable to load orders:", error);
+
+        orderTableBody.replaceChildren();
+
+        const row = document.createElement("tr");
+        const cell = createCell();
+        cell.colSpan = 6;
+        cell.textContent =
+          "Unable to load orders. Check Firestore permissions.";
+
+        row.appendChild(cell);
+        orderTableBody.appendChild(row);
+      },
+    );
+  } catch (error) {
+    console.error("Admin authorization failed:", error);
+    window.location.replace("/login");
+  }
+});

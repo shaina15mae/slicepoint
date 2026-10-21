@@ -1,0 +1,406 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body.auth-page-body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #121212;
+  position: relative;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+.bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; 
+  pointer-events: none; 
+}
+
+.bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 85% 20%, 
+    rgba(180, 50, 20, 0.55) 0%, 
+    rgba(50, 15, 10, 0.3) 45%, 
+    #121212 75%
+  );
+  z-index: 1;
+}
+
+/* Card Container */
+.auth-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  background: rgba(28, 28, 30, 0.75); /* Updated from #1c1c1e to 75% opacity */
+  backdrop-filter: blur(12px); /* Adds a modern blurred glass feel */
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 56px 38px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.hidden {
+  display: none !important;
+}
+
+.brand-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.logo-box {
+  width: auto;
+  height: 70px;            
+  background: transparent;   
+  border-radius: 0;         
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-logo-img {
+  width: auto;              
+  height: 100px;             
+  object-fit: contain;
+}
+
+.brand-info h2 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.brand-info span {
+  color: #8e8e93;
+  font-size: 0.8rem;
+}
+
+.form-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 23px;
+  position: relative;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  background: #2c2c2e;
+  border: 1px solid #3a3a3c;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+  border-color: #ff3b30;
+}
+
+.icon-input input {
+  padding-left: 38px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8e8e93;
+  font-size: 0.9rem;
+}
+
+/*  Toggle Eye  */
+.password-container {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #8e8e93;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.password-toggle:hover {
+  color: #ffffff;
+}
+
+/* Remember & Forgot Password */
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  font-size: 0.82rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #8e8e93;
+  cursor: pointer;
+}
+
+.remember-me input {
+  accent-color: #ff3b30;
+}
+
+.forgot-pass {
+  color: #ff3b30;
+  text-decoration: none;
+}
+
+.forgot-pass:hover {
+  text-decoration: underline;
+}
+
+.terms-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 0.8rem;
+  color: #8e8e93;
+}
+
+.terms-group input {
+  accent-color: #ff3b30;
+}
+
+/* Buttons */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff3b30;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #e03126;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 18px 0;
+  color: #8e8e93;
+  font-size: 0.8rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #3a3a3c;
+}
+
+.divider span {
+  padding: 0 10px;
+}
+
+.google-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #3a3a3c;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.google-btn:hover {
+  background: #2c2c2e;
+}
+
+/* Switch Links */
+.signup-link {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: #8e8e93;
+}
+
+.signup-link a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.signup-link a span {
+  color: #ff3b30;
+  font-weight: 600;
+}
+
+.signup-link a:hover span,
+.back-to-login:hover {
+  text-decoration: underline;
+}
+
+/* Footer Links inside Card */
+.footer-links {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #2c2c2e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: #6c6c70;
+}
+
+.footer-links a {
+  color: #8e8e93;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+}
+
+/* ================= MODAL STYLES ================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 9999;
+  padding: 20px;
+}
+
+/* Active State for Modals */
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-card {
+  background-color: #1c1c1e;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 12px;
+  padding: 28px;
+  border: 1px solid #3a3a3c;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-card {
+  transform: translateY(0);
+}
+
+.modal-card h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #3a3a3c;
+  padding-bottom: 10px;
+}
+
+.modal-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 24px;
+}
+
+.modal-list li {
+  font-size: 0.88rem;
+  color: #cccccc;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.modal-close-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff3b30;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background-color: #e03126;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+/*  Autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px transparent !important;
+}

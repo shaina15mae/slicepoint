@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oven2Door | Fresh Pizza Delivered</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<!-- PROMO BAR -->
+<div class="promo-bar">
+    <p><i class="fa-solid fa-fire"></i> 20% <strong>OVEN 2 DOOR </strong></p>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <img src="pizzapics/oven2doorlogo.png" alt="Oven2Door Logo">
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html" class="active">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="#ordertrack">Order Tracking</a>
+            <a href="about.html">About Us</a>
+            <a href="faqs.html">FAQs</a>
+        </nav>
+
+        <div class="nav-actions">
+            <div class="nav-search">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" placeholder="Search pizza..." aria-label="Search">
+            </div>
+            
+          <a href="login/login.html" class="user-icon-btn" aria-label="Login" title="Login">
+    <i class="fa-solid fa-user"></i>
+  </a>
+
+        <a href="cart.html" class="cart-nav-link" id="cartButton">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Cart</span>
+        </a>
+        
+        <a href="menu.html" class="order-btn">ORDER NOW</a>
+        </div>
+        </header>
+
+<main>
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="small-heading">
+                    <span></span>
+                    FRESH FROM OUR OVEN
+                </div>
+
+                <h1>
+                    PIZZA MADE
+                    <strong>FOR YOU!</strong>
+                </h1>
+
+                <p>Hot, fresh, and loaded with flavor. Your favorite pizza is just a few clicks away.</p>
+
+                <div class="hero-buttons">
+                    <a href="#menu" class="primary-btn">
+                        ORDER NOW
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="menu.html" class="secondary-btn">EXPLORE MENU</a>
+                </div>
+
+                <div class="hero-features">
+                    <div></div>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <div class="pizza-glow"></div>
+                <img src="pizzapics/pizza (1).avif" alt="Fresh Oven2Door Pizza">
+            </div>
+        </div>
+    </section>
+
+    <!-- HOT DEALS SECTION -->
+    <section class="deals-section" id="deals">
+        <div class="deals-container">
+            <div class="deals-header">
+                <div class="header-left">
+                    <span class="sub-title">DON'T MISS OUT</span>
+                    <h2>HOT <span>DEALS</span></h2>
+                </div>
+                <p class="header-right">More pizza. More savings. More reasons to order.</p>
+            </div>
+
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-content">
+                        <span class="deal-tag">WEEKEND SPECIAL</span>
+                        <h3>20% OFF</h3>
+                        <p>Enjoy your favorite pizza all weekend long.</p>
+                        <button class="deal-btn" onclick="applyDeal('WEEKEND')">ORDER NOW</button>
+                    </div>
+                    <div class="deal-image">
+                        <img src="pizzapics/pizza(4).avif" alt="Weekend Pizza Special">
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-content">
+                        <span class="deal-tag">MEAL FOR TWO</span>
+                        <h3>2 PIZZAS<br>+ 2 DRINKS</h3>
+                        <p>The perfect meal to share.</p>
+                        <button class="deal-btn" onclick="applyDeal('TWO')">ORDER NOW</button>
+                    </div>
+                    <div class="deal-image">
+                        <img src="pizzapics/pizza(2).avif" alt="Meal for Two">
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-content">
+                        <span class="deal-tag">PARTY PACK</span>
+                        <h3>FEED<br>THE CREW</h3>
+                        <p>Pizza, sides, and drinks for everyone.</p>
+                        <button class="deal-btn" onclick="applyDeal('PARTY')">ORDER NOW</button>
+                    </div>
+                    <div class="deal-image">
+                        <img src="pizzapics/pizza(3).avif" alt="Party Pack">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POPULAR PIZZAS SECTION -->
+    <section class="deals-section">
+        <div class="popular-container">
+            <div class="popular-header">
+                <h2>BEST SELLER</h2>
+                <a href="menu.html" class="view-all">VIEW ALL PIZZAS <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+
+            <div class="pizza-grid">
+                <div class="pizza-card">
+                    <div class="pizza-img-wrap">
+                        <img src="pizzapics/Hawaiianstuffedcrust.png" alt="Hawaiian">
+                    </div>
+                    <div class="pizza-info">
+                        <h3>Hawaiian</h3>
+                        <p>Ham, Pineapple, Mozzarella, Tomato Sauce</p>
+                        <div class="pizza-price">₱299</div>
+                        <button class="add-to-cart-btn"><i class="fa-solid fa-cart-shopping"></i> ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="pizza-card">
+                    <div class="pizza-img-wrap">
+                        <img src="pizzapics/Pepperonistuffedcrust.png" alt="Pepperoni Delight">
+                    </div>
+                    <div class="pizza-info">
+                        <h3>Pepperoni Delight</h3>
+                        <p>Pepperoni, Mozzarella, Pizza Sauce</p>
+                        <div class="pizza-price">₱299 </div>
+                        <button class="add-to-cart-btn"><i class="fa-solid fa-cart-shopping"></i> ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="pizza-card">
+                    <div class="pizza-img-wrap">
+                        <img src="pizzapics/Veggiethincrust.png" alt="Veggie Supreme">
+                    </div>
+                    <div class="pizza-info">
+                        <h3>Veggie Supreme</h3>
+                        <p>Bell Peppers, Olives, Onions, Corn, Mushrooms</p>
+                        <div class="pizza-price">₱299 </div>
+                        <button class="add-to-cart-btn"><i class="fa-solid fa-cart-shopping"></i> ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="pizza-card">
+                    <div class="pizza-img-wrap">
+                        <img src="pizzapics/Bbqchickenthincrust.png" alt="BBQ Chicken Crust">
+                    </div>
+                    <div class="pizza-info">
+                        <h3>BBQ Chicken</h3>
+                        <p>BBQ Sauce, Chicken, Red Onions, Cilantro</p>
+                        <div class="pizza-price">₱329</div>
+                        <button class="add-to-cart-btn"><i class="fa-solid fa-cart-shopping"></i> ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="pizza-card">
+                    <div class="pizza-img-wrap">
+                        <img src="pizzapics/Cheesestuffedcrust.png">
+                    </div>
+                    <div class="pizza-info">
+                        <h3>Cheese Burst</h3>
+                        <p>Extra Cheese, Mozzarella, Cheddar, Parmesan</p>
+                        <div class="pizza-price">₱369</div>
+                        <button class="add-to-cart-btn"><i class="fa-solid fa-cart-shopping"></i> ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="pizza-card">
+                    <div class="pizza-img-wrap">
+                        <img src="pizzapics/Meatloversstuffedcrust.png" alt="Meat Lovers">
+                    </div>
+                    <div class="pizza-info">
+                        <h3>Meat Lovers</h3>
+                        <p>Pepperoni, Sausage, Bacon, Ham, Beef</p>
+                        <div class="pizza-price">₱399 </div>
+                        <button class="add-to-cart-btn"><i class="fa-solid fa-cart-shopping"></i> ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer id="contact">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <div class="logo">
+                <img src="pizzapics/logo.png" alt="SlicePoint Logo">
+            </div>
+
+            <p>Fresh pizza. Big flavors. Delivered right to your door.</p>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/trixieanne.sarmiento.1" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/_tondor/?hl=en" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@matchafreyp_?lang=en" aria-label="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h3>QUICK LINKS</h3>
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="about.html">About Us</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>OUR MENU</h3>
+            <a href="menu.html">Pizza</a>
+            <a href="menu.html">Sides</a>
+            <a href="menu.html">Drinks</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>CUSTOMER SERVICE</h3>
+            <a href="faqs.html">FAQs</a>
+            <a href="terms/termscondition.html">Terms & Conditions</a>
+            <a href="terms/privacypolicy.html">Privacy Policy</a>
+        </div>
+
+        <div class="footer-column contact-column">
+            <h3>CONTACT US</h3>
+            <p><i class="fa-solid fa-location-dot"></i> Metro Manila, Philippines</p>
+            <p><i class="fa-solid fa-phone"></i> +63 912 345 6789</p>
+            <p><i class="fa-solid fa-envelope"></i> slicepoint@gmail.com</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 SlicePoint. All Rights Reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

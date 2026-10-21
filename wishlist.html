@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oven2Door | My Favorites</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Wishlist CSS -->
+    <link rel="stylesheet" href="wishlist.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         PROMO BAR
+    ========================== -->
+    <div class="promo-bar">
+        <span>20% OVEN 2 DOOR</span>
+    </div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <a href="index.html" class="logo-link">
+                <img src="pizzapics/oven2doorlogo.png" alt="Oven2Door Logo">
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html">HOME</a>
+                <a href="menu.html">MENU</a>
+                <a href="#ordertrack">ORDER TRACKING</a>
+                <a href="about.html">ABOUT US</a>
+                <a href="faqs.html">FAQS</a>
+            </div>
+
+            <div class="nav-actions">
+
+                <button class="nav-icon-btn" type="button" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+                <a href="login/login.html" class="nav-icon-btn" aria-label="Login">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+
+                <a href="cart.html" class="nav-icon-btn cart-icon" aria-label="Cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+
+                <a href="menu.html" class="order-now-btn">
+                    ORDER NOW
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+    <main class="wishlist-main">
+
+        <div class="wishlist-container">
+
+            <!-- HEADER -->
+            <div class="wishlist-header">
+
+                <div class="wishlist-title-area">
+
+                    <span class="eyebrow">
+                        YOUR SAVED ITEMS
+                    </span>
+
+                    <h1>FAVORITES</h1>
+
+                    <div class="title-line"></div>
+
+                    <div class="wishlist-subtitle-row">
+
+                        <p>
+                            Your favorite Oven2Door products are saved here.
+                        </p>
+
+                        <span class="saved-count" id="wishlistCount">
+                            0 saved items
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="back-menu-btn"
+                    id="backToMenu"
+                >
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Menu
+                </button>
+
+            </div>
+
+
+            <!-- =========================
+                 FAVORITES CONTENT
+            ========================== -->
+
+            <section class="wishlist-section">
+
+                <!-- PRODUCTS WILL BE INSERTED HERE -->
+                <div
+                    class="wishlist-grid"
+                    id="wishlistGrid"
+                ></div>
+
+
+                <!-- EMPTY STATE -->
+                <div
+                    class="empty-wishlist"
+                    id="emptyWishlist"
+                >
+
+                    <div class="empty-heart">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
+
+                    <h2>NO FAVORITES YET</h2>
+
+                    <p>
+                        Start adding your favorite pizzas, drinks, and sides from the menu.
+                    </p>
+
+                    <button
+                        type="button"
+                        class="browse-menu-btn"
+                        id="browseMenu"
+                    >
+                        <i class="fa-solid fa-utensils"></i>
+                        Browse Menu
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-line"></div>
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 Oven2Door
+                </p>
+
+                <p>
+                    Fresh Pizza Delivered
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Wishlist JS -->
+    <script src="wishlist.js"></script>
+
+</body>
+</html>

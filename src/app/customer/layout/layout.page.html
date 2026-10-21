@@ -1,0 +1,154 @@
+<!-- SIDEBAR -->
+<ion-menu contentId="main-content" type="overlay">
+  <ion-content>
+   <!-- PROFILE HEADER -->
+<div class="menu-header">
+  <div class="menu-avatar">
+    <ion-icon name="person-outline"></ion-icon>
+  </div>
+  <h2 class="menu-greeting">
+    Hello, {{ isLoggedIn() ? loggedInUserName() : 'Guest' }}
+  </h2>
+</div>
+
+    <!-- MENU LIST -->
+    <ion-list lines="none" class="menu-list">
+      <ion-menu-toggle [autoHide]="false">
+        <ion-item routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" button detail="false">
+          <ion-icon slot="start" name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-item>
+
+        <ion-item routerLink="/menu" routerLinkActive="active" button detail="false">
+          <ion-icon slot="start" name="pizza-outline"></ion-icon>
+          <ion-label>Menu</ion-label>
+        </ion-item>
+
+        <ion-item routerLink="/order-tracking" routerLinkActive="active" button detail="false">
+          <ion-icon slot="start" name="location-outline"></ion-icon>
+          <ion-label>Order Tracking</ion-label>
+        </ion-item>
+
+        <ion-item routerLink="/cart" routerLinkActive="active" button detail="false">
+          <ion-icon slot="start" name="cart-outline"></ion-icon>
+          <ion-label>My Cart</ion-label>
+        </ion-item>
+
+        <ion-item [routerLink]="isLoggedIn() ? '/wishlist' : '/login'" routerLinkActive="active" button detail="false">
+          <ion-icon slot="start" name="heart-outline"></ion-icon>
+          <ion-label>My Wishlist</ion-label>
+        </ion-item>
+
+        <ion-item routerLink="/aboutapp" routerLinkActive="active" button detail="false">
+          <ion-icon slot="start" name="phone-portrait-outline"></ion-icon>
+          <ion-label>About App</ion-label>
+        </ion-item>
+
+        <ion-item routerLink="/company" routerLinkActive="active" button detail="false">
+          <ion-icon slot="start" name="business-outline"></ion-icon>
+          <ion-label>About Company</ion-label>
+        </ion-item>
+
+        <ion-item routerLink="/about-us" routerLinkActive="active" button detail="false">
+          <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+          <ion-label>About Us</ion-label>
+        </ion-item>
+
+        <ion-item routerLink="/faqs" routerLinkActive="active" button detail="false">
+          <ion-icon slot="start" name="help-circle-outline"></ion-icon>
+          <ion-label>FAQs</ion-label>
+        </ion-item>
+
+        <!-- LOGGED IN -->
+        <ng-container *ngIf="isLoggedIn()">
+          <ion-item routerLink="/profile" routerLinkActive="active" button detail="false">
+            <ion-icon slot="start" name="person-outline"></ion-icon>
+            <ion-label>My Account</ion-label>
+          </ion-item>
+
+          <ion-item button detail="false" (click)="logout()">
+            <ion-icon slot="start" name="log-out-outline"></ion-icon>
+            <ion-label>Log Out</ion-label>
+          </ion-item>
+        </ng-container>
+
+        <!-- GUEST -->
+        <ng-container *ngIf="!isLoggedIn()">
+          <ion-item routerLink="/login" button detail="false">
+            <ion-icon slot="start" name="log-in-outline"></ion-icon>
+            <ion-label>Log In</ion-label>
+          </ion-item>
+
+          <ion-item routerLink="/signup" button detail="false">
+            <ion-icon slot="start" name="person-add-outline"></ion-icon>
+            <ion-label>Sign Up</ion-label>
+          </ion-item>
+        </ng-container>
+      </ion-menu-toggle>
+
+      <!-- ORDER NOW -->
+      <div class="sidebar-order">
+        <ion-menu-toggle [autoHide]="false">
+          <button type="button" class="btn-order-now" routerLink="/menu">
+            ORDER NOW
+          </button>
+        </ion-menu-toggle>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- MAIN CONTENT -->
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <div class="announcement-bar">
+      <span>🔥 20% SLICEPOINT</span>
+    </div>
+
+    <nav class="main-header">
+      <div class="logo-section">
+        <ion-menu-button></ion-menu-button>
+
+        <div class="logo-container">
+          <img
+            src="assets/images/pizzapics/logo.png"
+            alt="Oven2Door Logo"
+            class="brand-logo-img"
+          />
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- WISHLIST -->
+        <button
+          type="button"
+          class="wishlist-btn"
+          [routerLink]="isLoggedIn() ? '/wishlist' : '/login'"
+          [attr.aria-label]="'My Wishlist, ' + wishlistCount() + ' saved products'"
+          title="My Wishlist"
+        >
+          <span class="wishlist-icon-wrapper">
+            <ion-icon name="heart-outline"></ion-icon>
+            <span class="wishlist-badge" *ngIf="wishlistCount() > 0">
+              {{ wishlistCount() > 99 ? '99+' : wishlistCount() }}
+            </span>
+          </span>
+          <span class="desktop-only">WISHLIST</span>
+        </button>
+
+        <!-- CART -->
+        <button type="button" class="cart-btn" routerLink="/cart">
+          <span class="cart-icon-wrapper">
+            <ion-icon name="cart" class="cart-icon-orange"></ion-icon>
+            <span class="cart-badge" *ngIf="storefront.itemCount > 0">
+              {{ storefront.itemCount }}
+            </span>
+          </span>
+          <span class="desktop-only">CART</span>
+        </button>
+      </div>
+    </nav>
+  </ion-header>
+
+  <ion-router-outlet></ion-router-outlet>
+</div>

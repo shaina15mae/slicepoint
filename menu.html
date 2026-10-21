@@ -1,0 +1,2553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oven2Door | Fresh Pizza Delivered</title>
+
+    <link rel="stylesheet" href="menu.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="promo-bar">
+    <p><i class="fa-solid fa-fire"></i> 20% <strong>OVEN 2 DOOR </strong></p>
+</div>
+<!-- ================= NAVIGATION BAR ================= -->
+
+<header class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">
+            <img src="pizzapics/oven2doorlogo.png"
+                alt="Oven2Door Logo">
+
+        </a>
+
+
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="#menu" class="active">Menu</a>
+            <a href="#ordertrack">Order Tracking</a>
+            <a href="about.html">About Us</a>
+            <a href="faqs.html">FAQs</a>
+            
+        </nav>
+
+<div class="nav-actions">
+            <div class="nav-search">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" placeholder="Search pizza..." aria-label="Search">
+            </div>
+            
+          <a href="login/login.html" class="user-icon-btn" aria-label="Login" title="Login">
+    <i class="fa-solid fa-user"></i>
+  </a>
+
+        <a href="cart.html" class="cart-nav-link" id="cartButton">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Cart</span>
+        </a>
+        
+        <a href="menu.html" class="order-btn">ORDER NOW</a>
+        </div>
+
+    
+        </header>
+
+<!-- ================= MENU HEADER ================= -->
+
+<section class="menu-header">
+
+    <div class="header-image">
+
+        <img src="pizzapics/menu-header.jpg"
+            alt="Oven2Door Menu">
+
+        <!-- OVERLAY DESCRIPTION -->
+
+        <div class="menu-overlay">
+
+            <span>DISCOVER OUR</span>
+
+            <h1>MENU</h1>
+
+            <div class="header-line">
+
+                <span></span>
+
+                <i class="fa-solid fa-pizza-slice"></i>
+
+                <span></span>
+
+            </div>
+
+            <p>
+                Pizza, drinks, and side dishes —
+                made fresh, cooked to perfection,
+                and delivered straight to your door.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<main class="menu-main">
+
+
+    <!-- ================= MAIN CATEGORIES ================= -->
+
+    <section class="categories-section">
+
+        <div class="category-container">
+
+
+            <!-- PIZZA -->
+
+            <button class="category-card active"
+                data-category="pizza"
+                type="button">
+
+                <img src="pizzapics/pizza-category.png"
+                    alt="Pizza">
+
+                <span>
+                    PIZZA
+                </span>
+
+            </button>
+
+
+            <!-- DRINKS -->
+
+            <button class="category-card"
+                data-category="drinks"
+                type="button">
+
+                <img src="pizzapics/drinks-category.png"
+                    alt="Drinks">
+
+                <span>
+                    DRINKS
+                </span>
+
+            </button>
+
+
+            <!-- SIDE DISHES -->
+
+            <button class="category-card"
+                data-category="sides"
+                type="button">
+
+                <img src="pizzapics/sides-category.png"
+                    alt="Side Dishes">
+
+                <span>
+                    SIDE DISHES
+                </span>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- ================= FILTER & SORT ===================== -->
+    <!-- ===================================================== -->
+
+    <section class="filter-sort-section">
+        <div class="filter-sort-container">
+
+            <div class="filter-box">
+                <div class="filter-title-row">
+                    <div>
+                        <span class="filter-eyebrow">MENU FILTER</span>
+                        <h2>Filter Products</h2>
+                    </div>
+                    <button class="clear-filters-btn" id="clearFilters" type="button">
+                        Clear Filters
+                    </button>
+                </div>
+
+                <div class="filter-groups">
+                    <div class="filter-group">
+                        <label for="subcategoryFilter">Subcategory</label>
+                        <select id="subcategoryFilter">
+                            <option value="all">All Subcategories</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Price Range</label>
+                        <div class="price-inputs">
+                            <input id="minPrice" type="number" min="0" placeholder="Min ₱">
+                            <span>to</span>
+                            <input id="maxPrice" type="number" min="0" placeholder="Max ₱">
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="attributeFilter">Attributes</label>
+                        <select id="attributeFilter">
+                            <option value="all">All Attributes</option>
+                            <option value="popular">Popular</option>
+                            <option value="new">New</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="spicy">Spicy</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sort-box">
+
+    <!-- FAVORITES BUTTON -->
+    <button class="favorites-page-btn" id="favoritesPageBtn" type="button">
+        <i class="fa-solid fa-heart"></i>
+        <span>MY FAVORITES</span>
+        <span class="favorites-count" id="favoritesCount">0</span>
+    </button>
+
+    <!-- SORTING -->
+    <div class="sorting-area">
+        <label for="sortProducts">Sorting Options</label>
+
+        <select id="sortProducts">
+            <option value="default">Recommended</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name-az">Name: A to Z</option>
+            <option value="name-za">Name: Z to A</option>
+            <option value="popular">Most Popular</option>
+            <option value="newest">Newest</option>
+        </select>
+    </div>
+
+</div>
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- ================= FOOD CARDS ======================== -->
+    <!-- ===================================================== -->
+
+    <section class="food-section">
+
+
+        <!-- ================================================= -->
+        <!-- ================= PIZZA ========================= -->
+        <!-- ================================================= -->
+
+        <div class="food-grid"
+            id="pizzaFoods">
+
+
+            <!-- THIN CRUST -->
+
+            <div class="food-card"
+                data-subcategory="thin-crust"
+                data-name="Pepperoni Thin Crust"
+                data-description="Crispy, cheesy, and packed with flavorful pepperoni slices for a classic pizza experience."
+                data-price="299"
+                data-image="pizzapics/Pepperonithincrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Pepperonithincrust.png"
+                    alt="Pepperoni Thin Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Pepperoni Thin Crust</h3>
+
+                    <p>
+                        Crispy, cheesy, and packed with flavorful
+                        pepperoni slices for a classic pizza experience.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">
+                            ₱299
+                        </span>
+
+                        <div class="quantity-selector">
+
+                            <button class="quantity-btn minus"
+                                type="button">
+                                −
+                            </button>
+
+                            <span class="quantity">
+                                1
+                            </span>
+
+                            <button class="quantity-btn plus"
+                                type="button">
+                                +
+                            </button>
+
+                        </div>
+
+                        <button class="add-cart-btn"
+                            type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="thin-crust"
+                data-name="Hawaiian Thin Crust"
+                data-description="A delicious sweet-and-savory combination of juicy pineapple and smoky ham on a crispy crust."
+                data-price="299"
+                data-image="pizzapics/Hawaiianthincrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Hawaiianthincrust.png"
+                    alt="Hawaiian Thin Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Hawaiian Thin Crust</h3>
+
+                    <p>
+                        A delicious sweet-and-savory combination
+                        of juicy pineapple and smoky ham on a crispy crust.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">
+                            ₱299
+                        </span>
+
+                        <div class="quantity-selector">
+
+                            <button class="quantity-btn minus"
+                                type="button">−</button>
+
+                            <span class="quantity">1</span>
+
+                            <button class="quantity-btn plus"
+                                type="button">+</button>
+
+                        </div>
+
+                        <button class="add-cart-btn"
+                            type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="thin-crust"
+                data-name="Spinach Thin Crust"
+                data-description="A light and savory pizza featuring fresh spinach, creamy cheese, and a flavorful tomato base."
+                data-price="299"
+                data-image="pizzapics/Spinachthincrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Spinachthincrust.png"
+                    alt="Spinach Thin Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Spinach Thin Crust</h3>
+
+                    <p>
+                        A light and savory pizza featuring fresh spinach,
+                        creamy cheese, and a flavorful tomato base.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">
+                            ₱299
+                        </span>
+
+                        <div class="quantity-selector">
+
+                            <button class="quantity-btn minus"
+                                type="button">−</button>
+
+                            <span class="quantity">1</span>
+
+                            <button class="quantity-btn plus"
+                                type="button">+</button>
+
+                        </div>
+
+                        <button class="add-cart-btn"
+                            type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="thin-crust"
+                data-name="BBQ Chicken Thin Crust"
+                data-description="Tender chicken glazed with smoky BBQ sauce, paired with cheese for a rich and satisfying bite."
+                data-price="329"
+                data-image="pizzapics/BBQChickenthincrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/BBQChickenthincrust.png"
+                    alt="BBQ Chicken Thin Crust">
+
+                <div class="food-card-content">
+
+                    <h3>BBQ Chicken Thin Crust</h3>
+
+                    <p>
+                        Tender chicken glazed with smoky BBQ sauce,
+                        paired with cheese for a rich and satisfying bite.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">
+                            ₱329
+                        </span>
+
+                        <div class="quantity-selector">
+
+                            <button class="quantity-btn minus"
+                                type="button">−</button>
+
+                            <span class="quantity">1</span>
+
+                            <button class="quantity-btn plus"
+                                type="button">+</button>
+
+                        </div>
+
+                        <button class="add-cart-btn"
+                            type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="thin-crust"
+                data-name="Veggie Thin Crust"
+                data-description="A fresh and colorful mix of vegetables, savory sauce, and cheese on a perfectly crisp crust."
+                data-price="299"
+                data-image="pizzapics/Veggiethincrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Veggiethincrust.png"
+                    alt="Veggie Thin Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Veggie Thin Crust</h3>
+
+                    <p>
+                        A fresh and colorful mix of vegetables,
+                        savory sauce, and cheese on a perfectly crisp crust.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">
+                            ₱299
+                        </span>
+
+                        <div class="quantity-selector">
+
+                            <button class="quantity-btn minus"
+                                type="button">−</button>
+
+                            <span class="quantity">1</span>
+
+                            <button class="quantity-btn plus"
+                                type="button">+</button>
+
+                        </div>
+
+                        <button class="add-cart-btn"
+                            type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- THICK CRUST -->
+
+            <div class="food-card"
+                data-subcategory="thick-crust"
+                data-name="All Meat Thick Crust"
+                data-description="A pizza full of rich meat with a thick golden brown crust offering a chewy and savory bite."
+                data-price="349"
+                data-image="pizzapics/AllMeatthickcrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/AllMeatthickcrust.png"
+                    alt="All Meat Thick Crust">
+
+                <div class="food-card-content">
+
+                    <h3>All Meat Thick Crust</h3>
+
+                    <p>
+                        A pizza full of rich meat with a thick golden
+                        brown crust offering a chewy and savory bite.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱349</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="thick-crust"
+                data-name="Ham & Cheese Thick Crust"
+                data-description="A comforting and fluffy thick crust pizza topped with savory ham and cheese."
+                data-price="329"
+                data-image="pizzapics/Hamncheesethickcrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Hamncheesethickcrust.png"
+                    alt="Ham & Cheese Thick Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Ham & Cheese Thick Crust</h3>
+
+                    <p>
+                        A comforting and fluffy thick crust pizza
+                        topped with savory ham and cheese.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱329</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="thick-crust"
+                data-name="Thick Supreme Pizza"
+                data-description="A pizza filled with bacon, pepperoni, sausage, green peppers, olives, mushrooms, cheese, and tomato sauce."
+                data-price="379"
+                data-image="pizzapics/ThickSupremepizza.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/ThickSupremepizza.png"
+                    alt="Thick Supreme Pizza">
+
+                <div class="food-card-content">
+
+                    <h3>Thick Supreme Pizza</h3>
+
+                    <p>
+                        A pizza filled with bacon, pepperoni, sausage,
+                        green peppers, olives, and mushrooms.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱379</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="thick-crust"
+                data-name="All In Overload"
+                data-description="Our fluffy thick crust piled high with premium meats, fresh vegetables, and gooey mozzarella cheese."
+                data-price="399"
+                data-image="pizzapics/AllInOverload.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/AllInOverload.png"
+                    alt="All In Overload">
+
+                <div class="food-card-content">
+
+                    <h3>All In Overload</h3>
+
+                    <p>
+                        Our fluffy thick crust piled high with premium
+                        meats, fresh vegetables, and gooey mozzarella cheese.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱399</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="thick-crust"
+                data-name="Hawaiian Thick Crust"
+                data-description="Fluffy thick crust topped with savory ham, sweet pineapple, and gooey mozzarella cheese."
+                data-price="349"
+                data-image="pizzapics/HawaiianThickCrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/HawaiianThickCrust.png"
+                    alt="Hawaiian Thick Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Hawaiian Thick Crust</h3>
+
+                    <p>
+                        Fluffy thick crust topped with savory ham,
+                        sweet pineapple, and gooey mozzarella cheese.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱349</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUFFED CRUST -->
+
+            <div class="food-card"
+                data-subcategory="stuffed-crust"
+                data-name="Cheese Stuffed Crust"
+                data-description="Fluffy thick crust filled with gooey cheese and topped with melted mozzarella."
+                data-price="369"
+                data-image="pizzapics/CheeseStuffedCrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/CheeseStuffedCrust.png"
+                    alt="Cheese Stuffed Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Cheese Stuffed Crust</h3>
+
+                    <p>
+                        Fluffy thick crust filled with gooey cheese
+                        and topped with melted mozzarella.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱369</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="stuffed-crust"
+                data-name="Pepperoni Stuffed Crust"
+                data-description="Fluffy thick crust with a cheese-stuffed edge, loaded with savory pepperoni and mozzarella cheese."
+                data-price="389"
+                data-image="pizzapics/PepperoniStuffedCrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/PepperoniStuffedCrust.png"
+                    alt="Pepperoni Stuffed Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Pepperoni Stuffed Crust</h3>
+
+                    <p>
+                        Fluffy thick crust with a cheese-stuffed edge,
+                        loaded with savory pepperoni and mozzarella cheese.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱389</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="stuffed-crust"
+                data-name="Meat Lovers Stuffed Crust"
+                data-description="Fluffy thick crust loaded with pepperoni, ham, bacon, sausage, and mozzarella cheese."
+                data-price="399"
+                data-image="pizzapics/MeatLoversStuffedCrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/MeatLoversStuffedCrust.png"
+                    alt="Meat Lovers Stuffed Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Meat Lovers Stuffed Crust</h3>
+
+                    <p>
+                        Fluffy thick crust loaded with pepperoni,
+                        ham, bacon, sausage, and gooey mozzarella cheese.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱399</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="stuffed-crust"
+                data-name="Hawaiian Stuffed Crust"
+                data-description="Fluffy cheese-stuffed crust topped with savory ham, sweet pineapple, and mozzarella cheese."
+                data-price="389"
+                data-image="pizzapics/HawaiianStuffedCrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/HawaiianStuffedCrust.png"
+                    alt="Hawaiian Stuffed Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Hawaiian Stuffed Crust</h3>
+
+                    <p>
+                        Fluffy cheese-stuffed crust topped with savory ham,
+                        sweet pineapple, and gooey mozzarella cheese.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱389</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="stuffed-crust"
+                data-name="Supreme Stuffed Crust"
+                data-description="Cheese-stuffed crust loaded with premium meats, fresh vegetables, and melted mozzarella cheese."
+                data-price="409"
+                data-image="pizzapics/SupremeStuffedCrust.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/SupremeStuffedCrust.png"
+                    alt="Supreme Stuffed Crust">
+
+                <div class="food-card-content">
+
+                    <h3>Supreme Stuffed Crust</h3>
+
+                    <p>
+                        Cheese-stuffed crust loaded with premium meats,
+                        fresh vegetables, and melted mozzarella cheese.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱409</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ================= DRINKS ======================== -->
+        <!-- ================================================= -->
+
+        <div class="food-grid hidden"
+            id="drinksFoods">
+
+
+            <!-- SOFTDRINKS -->
+
+            <div class="food-card"
+                data-subcategory="softdrinks"
+                data-name="Coca Cola"
+                data-description="A classic fizzy cola with a refreshing, sweet taste."
+                data-price="60"
+                data-image="pizzapics/CocaCola.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/CocaCola.png"
+                    alt="Coca Cola">
+
+                <div class="food-card-content">
+
+                    <h3>Coca Cola</h3>
+
+                    <p>
+                        A classic fizzy cola with a refreshing,
+                        sweet taste.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱60</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="softdrinks"
+                data-name="Sprite"
+                data-description="A crisp and refreshing lemon-lime soda with a bubbly taste."
+                data-price="60"
+                data-image="pizzapics/Sprite.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Sprite.png"
+                    alt="Sprite">
+
+                <div class="food-card-content">
+
+                    <h3>Sprite</h3>
+
+                    <p>
+                        A crisp and refreshing lemon-lime soda
+                        with a bubbly taste.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱60</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="softdrinks"
+                data-name="Royal"
+                data-description="A sweet and fruity orange-flavored soda with a refreshing fizz."
+                data-price="60"
+                data-image="pizzapics/Royal.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Royal.png"
+                    alt="Royal">
+
+                <div class="food-card-content">
+
+                    <h3>Royal</h3>
+
+                    <p>
+                        A sweet and fruity orange-flavored soda
+                        with a refreshing fizz.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱60</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="softdrinks"
+                data-name="Root Beer"
+                data-description="A sweet, creamy, and aromatic soda with a classic root beer flavor."
+                data-price="65"
+                data-image="pizzapics/RootBeer.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/RootBeer.png"
+                    alt="Root Beer">
+
+                <div class="food-card-content">
+
+                    <h3>Root Beer</h3>
+
+                    <p>
+                        A sweet, creamy, and aromatic soda
+                        with a classic root beer flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱65</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="softdrinks"
+                data-name="Mountain Dew"
+                data-description="A bold, citrus-flavored soda with a refreshing and energetic taste."
+                data-price="65"
+                data-image="pizzapics/MountainDew.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/MountainDew.png"
+                    alt="Mountain Dew">
+
+                <div class="food-card-content">
+
+                    <h3>Mountain Dew</h3>
+
+                    <p>
+                        A bold, citrus-flavored soda with
+                        a refreshing and energetic taste.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱65</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- JUICE -->
+
+            <div class="food-card"
+                data-subcategory="juice"
+                data-name="Orange Juice"
+                data-description="A refreshing citrus drink with a naturally sweet and tangy orange flavor."
+                data-price="90"
+                data-image="pizzapics/OrangeJuice.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/OrangeJuice.png"
+                    alt="Orange Juice">
+
+                <div class="food-card-content">
+
+                    <h3>Orange Juice</h3>
+
+                    <p>
+                        A refreshing citrus drink with a naturally
+                        sweet and tangy orange flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱90</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="juice"
+                data-name="Apple Juice"
+                data-description="A smooth and refreshing drink with a naturally sweet apple flavor."
+                data-price="90"
+                data-image="pizzapics/AppleJuice.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/AppleJuice.png"
+                    alt="Apple Juice">
+
+                <div class="food-card-content">
+
+                    <h3>Apple Juice</h3>
+
+                    <p>
+                        A smooth and refreshing drink with
+                        a naturally sweet apple flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱90</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="juice"
+                data-name="Lemon Juice"
+                data-description="A bright and refreshing citrus drink with a tangy lemon flavor."
+                data-price="85"
+                data-image="pizzapics/LemonJuice.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/LemonJuice.png"
+                    alt="Lemon Juice">
+
+                <div class="food-card-content">
+
+                    <h3>Lemon Juice</h3>
+
+                    <p>
+                        A bright and refreshing citrus drink
+                        with a tangy lemon flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱85</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="juice"
+                data-name="Pineapple Juice"
+                data-description="A tropical drink with a sweet, juicy, and slightly tangy pineapple flavor."
+                data-price="90"
+                data-image="pizzapics/PineappleJuice.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/PineappleJuice.png"
+                    alt="Pineapple Juice">
+
+                <div class="food-card-content">
+
+                    <h3>Pineapple Juice</h3>
+
+                    <p>
+                        A tropical drink with a sweet, juicy,
+                        and slightly tangy pineapple flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱90</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="juice"
+                data-name="Mango Juice"
+                data-description="A smooth and fruity drink with a sweet and tropical mango flavor."
+                data-price="95"
+                data-image="pizzapics/MangoJuice.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/MangoJuice.png"
+                    alt="Mango Juice">
+
+                <div class="food-card-content">
+
+                    <h3>Mango Juice</h3>
+
+                    <p>
+                        A smooth and fruity drink with
+                        a sweet and tropical mango flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱95</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ICED BEVERAGES -->
+
+            <div class="food-card"
+                data-subcategory="iced-beverages"
+                data-name="Iced Tea"
+                data-description="Chilled and refreshing drinks perfect for cooling down on a warm day."
+                data-price="85"
+                data-image="pizzapics/IcedTea.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/IcedTea.png"
+                    alt="Iced Tea">
+
+                <div class="food-card-content">
+
+                    <h3>Iced Tea</h3>
+
+                    <p>
+                        Chilled and refreshing drinks perfect
+                        for cooling down on a warm day.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱85</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="iced-beverages"
+                data-name="Iced Coffee"
+                data-description="Smooth and creamy coffee served chilled over ice."
+                data-price="110"
+                data-image="pizzapics/IcedCoffee.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/IcedCoffee.png"
+                    alt="Iced Coffee">
+
+                <div class="food-card-content">
+
+                    <h3>Iced Coffee</h3>
+
+                    <p>
+                        Smooth and creamy coffee served chilled
+                        over ice.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱110</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="iced-beverages"
+                data-name="Blue Lemonade"
+                data-description="Sweet and tangy lemonade with a refreshing citrus flavor."
+                data-price="95"
+                data-image="pizzapics/BlueLemonade.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/BlueLemonade.png"
+                    alt="Blue Lemonade">
+
+                <div class="food-card-content">
+
+                    <h3>Blue Lemonade</h3>
+
+                    <p>
+                        Sweet and tangy lemonade with
+                        a refreshing citrus flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱95</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="iced-beverages"
+                data-name="Beer"
+                data-description="A chilled, refreshing drink with a smooth and slightly bitter taste."
+                data-price="120"
+                data-image="pizzapics/Beer.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Beer.png"
+                    alt="Beer">
+
+                <div class="food-card-content">
+
+                    <h3>Beer</h3>
+
+                    <p>
+                        A chilled, refreshing drink with
+                        a smooth and slightly bitter taste.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱120</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="iced-beverages"
+                data-name="Sparkling Water"
+                data-description="Light and refreshing water with a crisp, bubbly finish."
+                data-price="70"
+                data-image="pizzapics/SparklingWater.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/SparklingWater.png"
+                    alt="Sparkling Water">
+
+                <div class="food-card-content">
+
+                    <h3>Sparkling Water</h3>
+
+                    <p>
+                        Light and refreshing water with
+                        a crisp, bubbly finish.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱70</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ================= SIDE DISHES =================== -->
+        <!-- ================================================= -->
+
+        <div class="food-grid hidden"
+            id="sidesFoods">
+
+
+            <!-- FRIES -->
+
+            <div class="food-card"
+                data-subcategory="fries"
+                data-name="Classic Fries"
+                data-description="Crispy golden fries tossed in your choice of cheese, BBQ, or sour cream flavor."
+                data-price="99"
+                data-image="pizzapics/Fries.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Fries.png"
+                    alt="Classic Fries">
+
+                <div class="food-card-content">
+
+                    <h3>Classic Fries</h3>
+
+                    <div class="flavor-picker">
+                        <button class="flavor-btn" type="button">
+                            <i class="fa-solid fa-utensils"></i>
+                            Choose Flavor
+                        </button>
+                        <span class="selected-flavor">No flavor selected</span>
+                        <div class="flavor-options">
+                        <button class="flavor-option" type="button" data-flavor="Cheese">Cheese</button>
+                        <button class="flavor-option" type="button" data-flavor="BBQ">BBQ</button>
+                        <button class="flavor-option" type="button" data-flavor="Sour Cream">Sour Cream</button>
+                        </div>
+                    </div>
+
+                    <p>
+                        Crispy golden fries tossed in your choice
+                        of cheese, BBQ, or sour cream flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱99</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="fries"
+                data-name="Waffle Fries"
+                data-description="Crispy, golden waffle-cut fries with a satisfying crunch in every bite."
+                data-price="119"
+                data-image="pizzapics/WaffleFries.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/WaffleFries.png"
+                    alt="Waffle Fries">
+
+                <div class="food-card-content">
+
+                    <h3>Waffle Fries</h3>
+
+                    <p>
+                        Crispy, golden waffle-cut fries with
+                        a satisfying crunch in every bite.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱119</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="fries"
+                data-name="Crinkle Cut Fries"
+                data-description="Thick, crispy fries with a fun crinkle-cut texture and savory flavor."
+                data-price="109"
+                data-image="pizzapics/CrinkleCutFries.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/CrinkleCutFries.png"
+                    alt="Crinkle Cut Fries">
+
+                <div class="food-card-content">
+
+                    <h3>Crinkle Cut Fries</h3>
+
+                    <p>
+                        Thick, crispy fries with a fun crinkle-cut
+                        texture and savory flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱109</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="fries"
+                data-name="Bacon Cheese Fries"
+                data-description="Golden fries loaded with crispy bacon and melted cheese for the ultimate comfort food."
+                data-price="149"
+                data-image="pizzapics/BaconCheeseFries.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/BaconCheeseFries.png"
+                    alt="Bacon Cheese Fries">
+
+                <div class="food-card-content">
+
+                    <h3>Bacon Cheese Fries</h3>
+
+                    <p>
+                        Golden fries loaded with crispy bacon
+                        and melted cheese.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱149</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="fries"
+                data-name="Sweet Potato Fries"
+                data-description="Crispy sweet potato fries with a naturally sweet and savory flavor."
+                data-price="129"
+                data-image="pizzapics/SweetPotatoFries.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/SweetPotatoFries.png"
+                    alt="Sweet Potato Fries">
+
+                <div class="food-card-content">
+
+                    <h3>Sweet Potato Fries</h3>
+
+                    <p>
+                        Crispy sweet potato fries with a naturally
+                        sweet and savory flavor.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱129</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHICKEN -->
+
+            <div class="food-card"
+                data-subcategory="chicken"
+                data-name="Wings"
+                data-description="Juicy chicken wings coated in your choice of Garlic Parmesan, Buffalo, or BBQ sauce."
+                data-price="159"
+                data-image="pizzapics/Wings.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Wings.png"
+                    alt="Chicken Wings">
+
+                <div class="food-card-content">
+
+                    <h3>Wings</h3>
+
+                    <div class="flavor-picker">
+                        <button class="flavor-btn" type="button">
+                            <i class="fa-solid fa-utensils"></i>
+                            Choose Flavor
+                        </button>
+                        <span class="selected-flavor">No flavor selected</span>
+                        <div class="flavor-options">
+                        <button class="flavor-option" type="button" data-flavor="Garlic Parmesan">Garlic Parmesan</button>
+                        <button class="flavor-option" type="button" data-flavor="Buffalo">Buffalo</button>
+                        <button class="flavor-option" type="button" data-flavor="BBQ Wings">BBQ Wings</button>
+                        </div>
+                    </div>
+
+                    <p>
+                        Juicy chicken wings coated in your choice
+                        of Garlic Parmesan, Buffalo, or BBQ sauce.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱159</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="chicken"
+                data-name="Boneless Chicken Bites"
+                data-description="Tender, bite-sized chicken pieces that are crispy on the outside and juicy inside."
+                data-price="149"
+                data-image="pizzapics/BonelessChickenBites.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/BonelessChickenBites.png"
+                    alt="Boneless Chicken Bites">
+
+                <div class="food-card-content">
+
+                    <h3>Boneless Chicken Bites</h3>
+
+                    <p>
+                        Tender, bite-sized chicken pieces that
+                        are crispy on the outside and juicy inside.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱149</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="chicken"
+                data-name="Chicken Tenders"
+                data-description="Crispy golden strips of tender chicken, perfect for dipping."
+                data-price="149"
+                data-image="pizzapics/ChickenTenders.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/ChickenTenders.png"
+                    alt="Chicken Tenders">
+
+                <div class="food-card-content">
+
+                    <h3>Chicken Tenders</h3>
+
+                    <p>
+                        Crispy golden strips of tender chicken,
+                        perfect for dipping.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱149</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="chicken"
+                data-name="Chicken Nuggets"
+                data-description="Bite-sized pieces of tender chicken coated in a crispy golden breading."
+                data-price="139"
+                data-image="pizzapics/ChickenNuggets.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/ChickenNuggets.png"
+                    alt="Chicken Nuggets">
+
+                <div class="food-card-content">
+
+                    <h3>Chicken Nuggets</h3>
+
+                    <p>
+                        Bite-sized pieces of tender chicken coated
+                        in a crispy golden breading.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱139</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="chicken"
+                data-name="Chicken Poppers"
+                data-description="Crispy, flavorful bite-sized chicken pieces made for easy snacking."
+                data-price="139"
+                data-image="pizzapics/ChickenPoppers.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/ChickenPoppers.png"
+                    alt="Chicken Poppers">
+
+                <div class="food-card-content">
+
+                    <h3>Chicken Poppers</h3>
+
+                    <p>
+                        Crispy, flavorful bite-sized chicken pieces
+                        made for easy snacking.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱139</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PASTA -->
+
+            <div class="food-card"
+                data-subcategory="pasta"
+                data-name="Carbonara / Chicken Alfredo"
+                data-description="Creamy and savory pasta tossed in a rich sauce, available with classic carbonara."
+                data-price="199"
+                data-image="pizzapics/Carbonara.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Carbonara.png"
+                    alt="Carbonara / Chicken Alfredo">
+
+                <div class="food-card-content">
+
+                    <h3>Carbonara / Chicken Alfredo</h3>
+
+                    <p>
+                        Creamy and savory pasta tossed in a rich sauce,
+                        available with classic carbonara.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱199</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="pasta"
+                data-name="Spaghetti"
+                data-description="Classic spaghetti tossed in a rich tomato sauce and topped with savory goodness."
+                data-price="179"
+                data-image="pizzapics/Spaghetti.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Spaghetti.png"
+                    alt="Spaghetti">
+
+                <div class="food-card-content">
+
+                    <h3>Spaghetti</h3>
+
+                    <p>
+                        Classic spaghetti tossed in a rich tomato
+                        sauce and topped with savory goodness.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱179</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="pasta"
+                data-name="Lasagna"
+                data-description="Layers of pasta, rich meat sauce, and creamy cheese baked until perfectly delicious."
+                data-price="229"
+                data-image="pizzapics/Lasagna.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/Lasagna.png"
+                    alt="Lasagna">
+
+                <div class="food-card-content">
+
+                    <h3>Lasagna</h3>
+
+                    <p>
+                        Layers of pasta, rich meat sauce,
+                        and creamy cheese baked until perfectly delicious.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱229</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="pasta"
+                data-name="Mac n Cheese"
+                data-description="Creamy macaroni covered in smooth, melted cheese for a comforting classic."
+                data-price="189"
+                data-image="pizzapics/MacNCheese.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/MacNCheese.png"
+                    alt="Mac n Cheese">
+
+                <div class="food-card-content">
+
+                    <h3>Mac n Cheese</h3>
+
+                    <p>
+                        Creamy macaroni covered in smooth,
+                        melted cheese for a comforting classic.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱189</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="food-card"
+                data-subcategory="pasta"
+                data-name="Pesto Pasta"
+                data-description="Pasta tossed in a flavorful basil pesto sauce for a fresh and savory taste."
+                data-price="199"
+                data-image="pizzapics/PestoPasta.png">
+
+                <button class="favorite-btn" type="button" aria-label="Add to favorites" title="Add to favorites">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="pizzapics/PestoPasta.png"
+                    alt="Pesto Pasta">
+
+                <div class="food-card-content">
+
+                    <h3>Pesto Pasta</h3>
+
+                    <p>
+                        Pasta tossed in a flavorful basil pesto
+                        sauce for a fresh and savory taste.
+                    </p>
+
+                    <div class="food-card-bottom">
+
+                        <span class="food-price">₱199</span>
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" type="button">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn plus" type="button">+</button>
+                        </div>
+
+                        <button class="add-cart-btn" type="button">
+                            Add to Cart
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ===================================================== -->
+<!-- ================= FOOD POPUP ======================== -->
+<!-- ===================================================== -->
+
+<div class="food-modal"
+    id="foodModal">
+
+    <div class="food-modal-content">
+
+        <button class="modal-close"
+            id="modalClose"
+            type="button">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <img id="modalImage"
+            src=""
+            alt="Food">
+
+
+        <div class="modal-details">
+
+            <span class="modal-category"
+                id="modalCategory">
+                FOOD
+            </span>
+
+            <h2 id="modalName">
+                Food Name
+            </h2>
+
+            <p id="modalDescription">
+                Food description.
+            </p>
+
+            <div class="modal-bottom">
+
+                <span class="modal-price"
+                    id="modalPrice">
+                    ₱0
+                </span>
+
+
+                <div class="modal-quantity">
+
+                    <button id="modalMinus"
+                        type="button">
+                        −
+                    </button>
+
+                    <span id="modalQuantity">
+                        1
+                    </span>
+
+                    <button id="modalPlus"
+                        type="button">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button class="modal-add-cart"
+                id="modalAddCart"
+                type="button">
+
+                Add to Cart
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer id="contact">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <div class="logo">
+            <img src="pizzapics/oven2doorlogo.png"
+                alt="Oven2Door Logo">
+            </div>
+
+            <p>Fresh pizza. Big flavors. Delivered right to your door.</p>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/trixieanne.sarmiento.1" aria-label="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/_tondor/?hl=en" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@matchafreyp_?lang=en" aria-label="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h3>QUICK LINKS</h3>
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="about.html">About Us</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>OUR MENU</h3>
+            <a href="menu.html">Pizza</a>
+            <a href="menu.html">Sides</a>
+            <a href="menu.html">Drinks</a>
+        </div>
+
+
+        <div class="footer-column">
+            <h3>CUSTOMER SERVICE</h3>
+            <a href="faqs.html">FAQs</a>
+            <a href="terms/termscondition.html">Terms & Conditions</a>
+            <a href="terms/privacypolicy.html">Privacy Policy</a>
+        </div>
+
+        <div class="footer-column contact-column">
+            <h3>CONTACT US</h3>
+            <p><i class="fa-solid fa-location-dot"></i> Metro Manila, Philippines</p>
+            <p><i class="fa-solid fa-phone"></i> +63 912 345 6789</p>
+            <p><i class="fa-solid fa-envelope"></i> oven2door@gmail.com</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 Oven2Door. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+<script src="menu.js"></script>
+
+</body>
+
+</html>

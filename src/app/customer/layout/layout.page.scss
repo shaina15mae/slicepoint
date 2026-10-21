@@ -1,0 +1,424 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  --header-bg: #101010;
+  --brand-red: #d9251d;
+  --brand-red-hover: #b91f19;
+  --brand-yellow: #ffb300;
+  --text-white: #ffffff;
+  --nav-border: #292929;
+}
+
+ion-header {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+ion-router-outlet {
+  position: relative;
+  display: block;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+/* SIDEBAR MENU*/
+
+ion-menu {
+  --background: #fff;
+  --width: 280px;
+  --max-width: 80vw;
+}
+
+ion-menu ion-content {
+  --background: #fff;
+}
+
+/* PROFILE HEADER */
+.menu-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 28px 16px 22px;
+  background: linear-gradient(135deg, #d50027, #8a0018);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.menu-avatar {
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  border-radius: 50%;
+  background: #111;
+  border: 4px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 36px;
+    color: #ffb600;
+  }
+}
+
+.menu-greeting {
+  width: 100%;
+  margin: 12px 0 0;
+  text-align: center;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* MENU LIST */
+.menu-list {
+  padding: 12px 0;
+  background: transparent;
+
+  ion-item {
+    --background: transparent;
+    --color: #222;
+    --min-height: 56px;
+    --padding-start: 24px;
+    font-size: 1rem;
+
+    ion-icon {
+      color: #d50027;
+      font-size: 24px;
+      margin-right: 24px;
+    }
+  }
+
+  ion-item.active {
+    --background: rgba(213, 0, 39, 0.08);
+    --color: #d50027;
+    font-weight: 700;
+
+    ion-icon {
+      color: #ffb600;
+    }
+  }
+}
+
+/* ORDER NOW (SIDEBAR) */
+.sidebar-order {
+  padding: 16px 24px 24px;
+
+  .btn-order-now {
+    width: 100%;
+  }
+}
+
+/* ANNOUNCEMENT BAR */
+
+.announcement-bar {
+  width: 100%;
+  padding: 8px 16px;
+
+  background: var(--brand-red);
+  color: var(--text-white);
+
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* MAIN HEADER*/
+
+.main-header {
+  width: 100%;
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 12px 40px;
+
+  background: var(--header-bg);
+  color: var(--text-white);
+
+  position: relative;
+  z-index: 1000;
+}
+
+/* LOGO + HAMBURGER */
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+ion-menu-button {
+  --color: #ffffff;
+  font-size: 28px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo-img {
+  display: block;
+  width: auto;
+  height: 48px;
+  object-fit: contain;
+}
+
+/* HEADER ACTIONS*/
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+}
+
+/* WISHLIST */
+
+.header-actions .wishlist-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 40px;
+  padding: 8px 12px;
+
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  box-shadow: none;
+
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.header-actions .wishlist-btn ion-icon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  font-size: 22px;
+  color: #e83a42;
+}
+
+.header-actions .wishlist-btn:hover {
+  background-color: rgba(217, 37, 29, 0.12);
+  border-color: rgba(217, 37, 29, 0.3);
+}
+
+.header-actions .wishlist-btn:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 3px;
+}
+
+.wishlist-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wishlist-badge {
+  position: absolute;
+  top: -8px;
+  right: -11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 19px;
+  height: 19px;
+  padding: 0 4px;
+
+  background: #d9251d;
+  color: #ffffff;
+
+  border: 2px solid #ffffff;
+  border-radius: 50px;
+
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* CART */
+
+.cart-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  border: none;
+  background: transparent;
+  color: var(--text-white);
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cart-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-icon-orange {
+  color: var(--brand-yellow);
+  font-size: 22px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -9px;
+  right: -10px;
+
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--brand-red);
+  color: var(--text-white);
+
+  border: 2px solid var(--header-bg);
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ORDER NOW BUTTON */
+
+.btn-order-now {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 11px 18px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: var(--brand-red);
+  color: var(--text-white);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-order-now:hover {
+  background: var(--brand-red-hover);
+}
+
+/* RESPONSIVE*/
+
+@media screen and (max-width: 1100px) {
+  .header-actions .wishlist-btn {
+    padding: 8px;
+  }
+
+  .header-actions .wishlist-btn .wishlist-label {
+    display: none;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 820px) {
+  .main-header {
+    min-height: 64px;
+    padding: 10px 18px;
+  }
+
+  .brand-logo-img {
+    height: 42px;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .header-actions {
+    margin-left: auto;
+    gap: 14px;
+  }
+
+  .header-actions .wishlist-btn {
+    min-height: 40px;
+    padding: 7px;
+  }
+
+  .header-actions .wishlist-btn ion-icon {
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
+  }
+
+  .cart-btn {
+    font-size: 0;
+  }
+
+  .cart-icon-orange {
+    font-size: 24px;
+  }
+
+  .cart-badge {
+    top: -8px;
+    right: -9px;
+  }
+}
+
+/* Small phones */
+@media screen and (max-width: 480px) {
+  .main-header {
+    padding: 9px 14px;
+    gap: 10px;
+  }
+
+  .brand-logo-img {
+    height: 38px;
+  }
+
+  ion-menu-button {
+    font-size: 25px;
+  }
+}

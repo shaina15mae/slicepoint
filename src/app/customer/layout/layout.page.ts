@@ -1,0 +1,267 @@
+import { WishlistService } from '../../services/firebase/wishlist.service';
+import { Unsubscribe as AuthUnsubscribe } from 'firebase/auth';
+import { Unsubscribe as FirestoreUnsubscribe } from 'firebase/firestore';
+
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
+
+import { CommonModule } from '@angular/common';
+
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+
+import { Subscription } from 'rxjs';
+
+import { StorefrontService } from '../../services/storefront.service';
+
+import {
+  IonHeader,
+  IonIcon,
+  IonRouterOutlet,
+  IonSplitPane,
+  IonMenu,
+  IonMenuToggle,
+  IonMenuButton,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonToolbar,
+  IonContent,
+} from '@ionic/angular';
+
+import { addIcons } from 'ionicons';
+
+import {
+  searchOutline,
+  personOutline,
+  cart,
+  menuOutline,
+  closeOutline,
+  heartOutline,
+  homeOutline,
+  pizzaOutline,
+  locationOutline,
+  informationCircleOutline,
+  helpCircleOutline,
+  logOutOutline,
+  logInOutline,
+  personAddOutline,
+  cartOutline,
+  phonePortraitOutline,
+  businessOutline,
+} from 'ionicons/icons';
+
+import { doc, onSnapshot } from 'firebase/firestore';
+
+import { onAuthStateChanged, signOut, Unsubscribe } from 'firebase/auth';
+
+import { auth, db } from '../../firebase.config';
+
+@Component({
+  selector: 'app-layout',
+  templateUrl: './layout.page.html',
+  styleUrls: ['./layout.page.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    IonHeader,
+    IonIcon,
+    IonRouterOutlet,
+    IonSplitPane,
+    IonMenu,
+    IonMenuToggle,
+    IonMenuButton,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonToolbar,
+    IonContent,
+  ],
+})
+export class LayoutPage implements OnInit, OnDestroy {
+  wishlistCount = signal(0);
+
+  private wishlistAuthUnsubscribe?: AuthUnsubscribe;
+  private wishlistCountUnsubscribe?: FirestoreUnsubscribe;
+  isMobileMenuOpen = false;
+
+  // Signals notify Angular when Firebase state changes.
+  isLoggedIn = signal(false);
+  loggedInUserName = signal('');
+  loggedInUserPhoto = signal('');
+
+  private cartSubscription?: Subscription;
+  private authUnsubscribe?: Unsubscribe;
+  private profileUnsubscribe?: Unsubscribe;
+
+  constructor(
+    public storefront: StorefrontService,
+    private router: Router,
+    private wishlistService: WishlistService,
+  ) {
+    addIcons({
+      searchOutline,
+      personOutline,
+      cart,
+      menuOutline,
+      closeOutline,
+      heartOutline,
+      homeOutline,
+      pizzaOutline,
+      locationOutline,
+      informationCircleOutline,
+      helpCircleOutline,
+      logOutOutline,
+      logInOutline,
+      personAddOutline,
+      cartOutline,
+      phonePortraitOutline,
+      businessOutline,
+    });
+
+    this.cartSubscription = this.storefront.changed.subscribe(() => {
+      // Preserve existing cart subscription.
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadLoggedInUser();
+    this.listenToWishlistCount();
+  }
+
+  private listenToWishlistCount(): void {
+    this.wishlistAuthUnsubscribe = onAuthStateChanged(auth, (user) => {
+      this.wishlistCountUnsubscribe?.();
+      this.wishlistCountUnsubscribe = undefined;
+
+      this.wishlistCount.set(0);
+
+      if (!user) {
+        return;
+      }
+
+      this.wishlistCountUnsubscribe = this.wishlistService.listenToWishlist(
+        user.uid,
+        (productIds) => {
+          if (auth.currentUser?.uid !== user.uid) {
+            return;
+          }
+
+          this.wishlistCount.set(productIds.length);
+        },
+        (error) => {
+          console.error('Wishlist count error:', error);
+          this.wishlistCount.set(0);
+        },
+      );
+    });
+  }
+
+  private loadLoggedInUser(): void {
+    this.authUnsubscribe = onAuthStateChanged(
+      auth,
+      (user) => {
+        // Remove the previous Firestore listener.
+        this.profileUnsubscribe?.();
+        this.profileUnsubscribe = undefined;
+
+        this.isLoggedIn.set(!!user);
+
+        if (!user) {
+          this.loggedInUserName.set('');
+          this.loggedInUserPhoto.set('');
+          return;
+        }
+
+        // Fallback while the Firestore profile loads.
+        const fallbackName =
+          user.displayName?.split(' ')[0] ||
+          user.email?.split('@')[0] ||
+          'Customer';
+
+        this.loggedInUserName.set(fallbackName);
+        this.loggedInUserPhoto.set(user.photoURL || '');
+
+        // Listen to the current customer's profile.
+        const userRef = doc(db, 'users', user.uid);
+
+        this.profileUnsubscribe = onSnapshot(
+          userRef,
+          (snapshot) => {
+            // Ignore updates from a previous login session.
+            if (auth.currentUser?.uid !== user.uid) {
+              return;
+            }
+
+            if (!snapshot.exists()) {
+              this.loggedInUserName.set(fallbackName);
+              return;
+            }
+
+            const userData = snapshot.data();
+            const firstName = userData['firstName'];
+
+            if (typeof firstName === 'string' && firstName.trim()) {
+              this.loggedInUserName.set(firstName.trim());
+            } else {
+              this.loggedInUserName.set(fallbackName);
+            }
+
+            const photo = userData['photoURL'];
+            if (typeof photo === 'string' && photo.trim()) {
+              this.loggedInUserPhoto.set(photo.trim());
+            }
+          },
+          (error) => {
+            console.error('Layout: Profile listener error:', error);
+          },
+        );
+      },
+      (error) => {
+        console.error('Layout: Authentication listener error:', error);
+
+        this.isLoggedIn.set(false);
+        this.loggedInUserName.set('');
+        this.loggedInUserPhoto.set('');
+      },
+    );
+  }
+
+  async logout(): Promise<void> {
+    try {
+      await signOut(auth);
+
+      this.isLoggedIn.set(false);
+      this.loggedInUserName.set('');
+      this.loggedInUserPhoto.set('');
+
+      this.closeMobileMenu();
+
+      await this.router.navigateByUrl('/login', {
+        replaceUrl: true,
+      });
+    } catch (error) {
+      console.error('Logout failed:', error);
+      alert('Unable to log out. Please try again.');
+    }
+  }
+
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
+  }
+
+  ngOnDestroy(): void {
+    // Existing cleanup
+    this.cartSubscription?.unsubscribe();
+    this.profileUnsubscribe?.();
+    this.authUnsubscribe?.();
+
+    // Wishlist cleanup
+    this.wishlistAuthUnsubscribe?.();
+    this.wishlistCountUnsubscribe?.();
+  }
+}

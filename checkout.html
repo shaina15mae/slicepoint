@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Oven2Door | Checkout</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Checkout CSS -->
+    <link rel="stylesheet" href="checkout.css">
+</head>
+
+<body>
+
+<!-- =========================
+     PROMO BAR
+========================= -->
+
+<div class="promo-bar">
+    <p>
+        <i class="fa-solid fa-fire"></i>
+        20%
+        <strong>OVEN 2 DOOR</strong>
+    </p>
+</div>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="logo">
+            <img src="pizzapics/oven2doorlogo.png" alt="Oven2Door Logo">
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="index.html">Home</a>
+
+            <a href="menu.html">Menu</a>
+
+            <a href="#ordertrack">Order Tracking</a>
+
+            <a href="about.html">About Us</a>
+
+            <a href="faqs.html">FAQs</a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="nav-search">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input
+                    type="text"
+                    placeholder="Search pizza..."
+                    aria-label="Search"
+                >
+            </div>
+
+            <a
+                href="login/login.html"
+                class="user-icon-btn"
+                aria-label="Login"
+                title="Login"
+            >
+                <i class="fa-solid fa-user"></i>
+            </a>
+
+            <a href="cart.html" class="cart-nav-link">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Cart</span>
+            </a>
+
+            <a href="menu.html" class="order-btn">
+                ORDER NOW
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     CHECKOUT HERO
+========================= -->
+
+<section class="checkout-hero">
+
+    <div class="checkout-hero-container">
+
+        <div class="checkout-heading">
+
+            <span class="sub-title">
+                <span></span>
+                SECURE CHECKOUT
+            </span>
+
+            <h1>
+                COMPLETE<br>
+                <strong>YOUR ORDER.</strong>
+            </h1>
+
+            <p>
+                Review your pizza order, enter your delivery details,
+                and choose your preferred payment method.
+            </p>
+
+        </div>
+
+        <div class="checkout-icon">
+            <i class="fa-solid fa-pizza-slice"></i>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CHECKOUT CONTAINER
+========================= -->
+
+<main class="checkout-container">
+
+    <div class="checkout-grid">
+
+
+        <!-- =========================
+             STEP 1
+        ========================= -->
+
+        <section class="checkout-card" id="step1">
+
+            <div class="step-title">
+
+                <div class="step-number">01</div>
+
+                <div>
+                    <span class="step-label">STEP ONE</span>
+                    <h2>Review Your Order</h2>
+                </div>
+
+                <span class="status" id="status1">
+                    REQUIRED
+                </span>
+
+            </div>
+
+
+            <!-- PRODUCT 1 -->
+
+            <div class="product">
+
+                <div class="product-image">
+                    <img
+                        src="pizzapics/WaffleFries.png"
+                        alt="Waffle Fries"
+                    >
+                </div>
+
+                <div class="product-info">
+
+                    <h3>Waffle Fries</h3>
+
+                    <p>
+                        Crispy, golden waffle-cut fries seasoned to perfection, with a deliciously crunchy outside and soft, fluffy inside.
+                    </p>
+
+                    <div class="quantity">
+                        <label>Qty:</label>
+
+                        <div class="quantity-controls">
+                            <button type="button" class="quantity-btn minus">−</button>
+                            <span class="quantity-value">1</span>
+                            <button type="button" class="quantity-btn plus">+</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="product-price">
+                    ₱119.00
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT 2 -->
+
+            <div class="product">
+
+                <div class="product-image">
+                    <img
+                        src="pizzapics/Thicksupremepizza.png"
+                        alt="Thick Supreme Pizza"
+                    >
+                </div>
+
+                <div class="product-info">
+
+                    <h3>Thick Supreme Pizza</h3>
+
+                    <p>
+                        A thick, fluffy crust loaded with savory meats, fresh vegetables, melted cheese, and rich tomato sauce for a hearty, satisfying bite.
+                    </p>
+
+                    <div class="quantity">
+                        <label>Qty:</label>
+
+                        <div class="quantity-controls">
+                            <button type="button" class="quantity-btn minus">−</button>
+                            <span class="quantity-value">1</span>
+                            <button type="button" class="quantity-btn plus">+</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="product-price">
+                    ₱379.00
+                </div>
+
+            </div>
+
+
+            <!-- DELIVERY -->
+
+            <div class="delivery-section">
+
+                <div class="section-heading">
+                    <span>DELIVERY METHOD</span>
+                    <h3>Choose Delivery</h3>
+                </div>
+
+
+                <label class="delivery-option">
+
+                    <input
+                        type="radio"
+                        name="delivery"
+                        id="delivery"
+                        value="60"
+                    >
+
+                    <div class="delivery-icon">
+                        <i class="fa-solid fa-motorcycle"></i>
+                    </div>
+
+                    <div class="delivery-details">
+
+                        <div>
+                            <strong>Regular Delivery</strong>
+
+                            <p>
+                                3–5 business days
+                            </p>
+                        </div>
+
+                        <strong class="delivery-price">
+                            ₱60
+                        </strong>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <!-- SUBTOTAL -->
+
+            <div class="subtotal">
+
+                <span>Subtotal</span>
+
+                <strong>
+                    ₱800
+                </strong>
+
+            </div>
+
+
+            <div class="shipping">
+
+                <span>Delivery Fee</span>
+
+                <strong id="shippingPrice">
+                    ₱0
+                </strong>
+
+            </div>
+
+
+            <div class="step-message" id="step1Message">
+
+                Please select a delivery option to continue.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             STEP 2
+        ========================= -->
+
+        <section class="checkout-card" id="step2">
+
+            <div class="step-title">
+
+                <div class="step-number">02</div>
+
+                <div>
+                    <span class="step-label">STEP TWO</span>
+                    <h2>Delivery Address</h2>
+                </div>
+
+                <span class="status" id="status2">
+                    REQUIRED
+                </span>
+
+            </div>
+
+
+            <p class="required-text">
+                Please provide your delivery information.
+                All fields are required.
+            </p>
+
+
+            <form id="addressForm">
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address *
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="example@email.com"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="firstName">
+                            First Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="firstName"
+                            placeholder="First Name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="lastName">
+                            Last Name *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lastName"
+                            placeholder="Last Name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Telephone *
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="09XXXXXXXXX"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="address">
+                        Delivery Address *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="address"
+                        placeholder="House No., Street, Barangay"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="city">
+                            City / Municipality *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="city"
+                            placeholder="City / Municipality"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="province">
+                            Province *
+                        </label>
+
+                        <select id="province" required>
+
+                            <option value="">
+                                Select Province
+                            </option>
+
+                            <option value="Metro Manila">
+                                Metro Manila
+                            </option>
+
+                            <option value="Cavite">
+                                Cavite
+                            </option>
+
+                            <option value="Laguna">
+                                Laguna
+                            </option>
+
+                            <option value="Batangas">
+                                Batangas
+                            </option>
+
+                            <option value="Rizal">
+                                Rizal
+                            </option>
+
+                            <option value="Quezon">
+                                Quezon
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="zip">
+                        ZIP Code *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="zip"
+                        placeholder="ZIP Code"
+                        required
+                    >
+
+                </div>
+
+            </form>
+
+
+            <div class="step-message" id="step2Message">
+
+                Complete all required fields to continue.
+
+            </div>
+
+        </section>
+
+
+
+        <div class="right-column">
+
+    <!-- STEP 3 -->
+    <section class="checkout-card" id="step3">
+
+        <div class="step-title">
+
+            <div class="step-number">03</div>
+
+            <div>
+                <span class="step-label">STEP THREE</span>
+                <h2>Select Payment</h2>
+            </div>
+
+            <span class="status" id="status3">
+                REQUIRED
+            </span>
+
+        </div>
+
+        <label class="payment-option">
+
+            <input
+                type="radio"
+                name="payment"
+                id="paymaya"
+                value="PayMaya"
+            >
+
+            <div class="payment-icon">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+
+            <div class="payment-text">
+
+                <strong>PayMaya</strong>
+
+                <p>
+                    Pay securely using PayMaya.
+                </p>
+
+            </div>
+
+            <span class="radio-circle"></span>
+
+        </label>
+
+        <div class="payment-info" id="paymentInfo">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <p>
+                You will be redirected to PayMaya
+                after clicking Complete Order.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+             ORDER SUMMARY
+        ========================= -->
+
+        <aside class="summary-card">
+
+            <div class="summary-heading">
+
+                <span>YOUR ORDER</span>
+
+                <h2>Order Summary</h2>
+
+            </div>
+
+
+            <div class="summary-products">
+
+                <div class="summary-row">
+
+                    <span>
+                        1 × Hawaiian
+                    </span>
+
+                    <span>
+                        ₱300
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        1 × Pepperoni Stuffed Crust
+                    </span>
+
+                    <span>
+                        ₱500
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-details">
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span>
+                        ₱800
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <span id="summaryShipping">
+                        ₱0
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="total-row">
+
+                <div>
+
+                    <span>ORDER TOTAL</span>
+
+                    <small>VAT included</small>
+
+                </div>
+
+                <strong id="orderTotal">
+                    ₱800
+                </strong>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="completeOrder"
+                class="complete-btn"
+                disabled
+            >
+
+                COMPLETE ORDER
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <p class="privacy">
+
+                <i class="fa-solid fa-lock"></i>
+
+                Your information is securely protected.
+                By completing your order, you agree to
+                our terms and privacy policy.
+
+            </p>
+
+
+            <div class="summary-features">
+
+                <div>
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Secure Payment</span>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-motorcycle"></i>
+                    <span>Fast Delivery</span>
+                </div>
+
+                <div>
+                    <i class="fa-solid fa-pizza-slice"></i>
+                    <span>Fresh Pizza</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+</div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">
+                <img
+                    src="pizzapics/oven2doorlogo.png"
+                    alt="Oven2Door Logo"
+                >
+            </div>
+
+            <p>
+                Fresh pizza. Big flavors.
+                Delivered right to your door.
+            </p>
+
+            <div class="social-links">
+
+                <a
+                    href="https://www.facebook.com/trixieanne.sarmiento.1"
+                    aria-label="Facebook"
+                >
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+
+                <a
+                    href="https://www.instagram.com/_tondor/?hl=en"
+                    aria-label="Instagram"
+                >
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+
+                <a
+                    href="https://www.tiktok.com/@matchafreyp_?lang=en"
+                    aria-label="TikTok"
+                >
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>QUICK LINKS</h3>
+
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="about.html">About Us</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>OUR MENU</h3>
+
+            <a href="menu.html">Pizza</a>
+            <a href="menu.html">Sides</a>
+            <a href="menu.html">Drinks</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>CUSTOMER SERVICE</h3>
+
+            <a href="faqs.html">FAQs</a>
+            <a href="terms/termscondition.html">
+                Terms & Conditions
+            </a>
+            <a href="terms/privacypolicy.html">
+                Privacy Policy
+            </a>
+
+        </div>
+
+
+        <div class="footer-column contact-column">
+
+            <h3>CONTACT US</h3>
+
+            <p>
+                <i class="fa-solid fa-location-dot"></i>
+                Metro Manila, Philippines
+            </p>
+
+            <p>
+                <i class="fa-solid fa-phone"></i>
+                +63 912 345 6789
+            </p>
+
+            <p>
+                <i class="fa-solid fa-envelope"></i>
+                oven2door@gmail.com
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Oven2Door. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="checkout.js"></script>
+
+</body>
+</html>

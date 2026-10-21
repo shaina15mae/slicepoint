@@ -1,0 +1,252 @@
+:host {
+  --red: #d9251d;
+  --yellow: #ffb300;
+  --black: #101010;
+  --muted: #5f5f5f;
+}
+
+ion-content.company-page {
+  --background: #fafaf8;
+}
+
+.co-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.co-section {
+  padding: 64px 0;
+
+  &.alt {
+    background: #fff;
+  }
+}
+
+.co-head {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.co-sub {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+h2 {
+  margin: 0;
+  color: var(--black);
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1.2;
+
+  span {
+    color: var(--red);
+  }
+}
+
+/* HERO */
+.co-hero {
+  padding: 80px 24px;
+  text-align: center;
+  color: #fff;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(217, 37, 29, 0.35), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 179, 0, 0.18), transparent 50%),
+    var(--black);
+
+  .co-eyebrow {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--yellow);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 4px;
+  }
+
+  h1 {
+    margin: 0 auto 28px;
+    max-width: 760px;
+    font-size: clamp(2rem, 6vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+
+    span {
+      color: var(--yellow);
+    }
+  }
+}
+
+.co-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 8px;
+  background: var(--yellow);
+  color: #000;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    background: #ffc233;
+    transform: translateY(-2px);
+  }
+}
+
+/* STORY TEXT */
+.story {
+  max-width: 820px;
+
+  p {
+    margin: 0 0 20px;
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.8;
+
+    strong {
+      color: var(--red);
+    }
+  }
+}
+
+/* VALUES */
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.value-card {
+  padding: 26px 20px;
+  border-radius: 16px;
+  background: #fafaf8;
+  border: 1px solid #eee;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  h3 {
+    margin: 14px 0 8px;
+    color: var(--black);
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.93rem;
+    line-height: 1.6;
+  }
+}
+
+.value-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: var(--black);
+  border: 3px solid var(--yellow);
+  font-size: 24px;
+}
+
+/* MISSION / VISION / COMMITMENT */
+.mvc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.mvc-card {
+  padding: 32px 26px;
+  border-radius: 18px;
+  background: var(--black);
+  color: #fff;
+  border-top: 5px solid var(--red);
+
+  &:nth-child(2) {
+    border-top-color: var(--yellow);
+  }
+
+  &:nth-child(3) {
+    border-top-color: var(--red);
+  }
+
+  h3 {
+    margin: 14px 0 12px;
+    color: var(--yellow);
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+
+  p {
+    margin: 0;
+    color: #d6d6d6;
+    font-size: 0.97rem;
+    line-height: 1.75;
+  }
+}
+
+.mvc-icon {
+  font-size: 34px;
+}
+
+/* CTA */
+.co-cta {
+  padding: 64px 24px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--red), #8a0018);
+  color: #fff;
+
+  h2 {
+    color: #fff;
+
+    span {
+      color: var(--yellow);
+    }
+  }
+
+  p {
+    margin: 12px 0 24px;
+    color: #ffd9d9;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .mvc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .value-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .co-section {
+    padding: 44px 0;
+  }
+
+  .co-hero {
+    padding: 56px 20px;
+  }
+
+  .value-grid {
+    grid-template-columns: 1fr;
+  }
+}

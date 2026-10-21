@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oven2Door - Receipt</title>
+
+    <link rel="stylesheet" href="receipt.css">
+</head>
+
+<body>
+
+    <div class="receipt">
+
+        <!-- Logo -->
+        <div class="logo">
+            <img src="pizzapics/oven2doorlogo(edited).png"
+            alt="Oven2Door Logo">
+        </div>
+
+        <!-- Title -->
+        <h1>Oven2Door Receipt</h1>
+
+        <!-- Order Information -->
+        <div class="order-info">
+
+            <div>
+                <span>Order Number</span>
+                <strong id="orderNumber"></strong>
+            </div>
+
+            <div class="date">
+                <span>Date</span>
+                <strong id="orderDate"></strong>
+            </div>
+
+        </div>
+
+        <!-- Customer Information -->
+        <div class="section">
+
+            <h2>Customer Information</h2>
+
+            <p>
+                <strong>Name:</strong>
+                <span id="customerName"></span>
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                <span id="customerEmail"></span>
+            </p>
+
+            <p>
+                <strong>Telephone:</strong>
+                <span id="customerPhone"></span>
+            </p>
+
+            <p>
+                <strong>Address:</strong>
+                <span id="customerAddress"></span>
+            </p>
+
+        </div>
+
+        <!-- Order Summary -->
+        <div class="section">
+
+            <h2>Order Summary</h2>
+
+            <div class="items-header">
+                <span>Item</span>
+                <span>Amount</span>
+            </div>
+
+            <div id="orderItems">
+                <!-- Items will be connected to your main website -->
+            </div>
+
+        </div>
+
+        <!-- Total -->
+            <div class="section totals">
+
+        <div class="total-row">
+            <span>Subtotal</span>
+            <span id="subtotal"></span>
+        </div>
+
+        <div class="total-row discount">
+            <span>Discount</span>
+            <span id="discount"></span>
+        </div>
+
+        <div class="total-row">
+            <span>Delivery Fee</span>
+            <span id="deliveryFee"></span>
+        </div>
+
+        <div class="total-row">
+            <span>Service Fee</span>
+            <span id="serviceFee"></span>
+        </div>
+
+        <div class="total-row">
+            <span>Tax</span>
+            <span id="tax"></span>
+        </div>
+
+        <div class="total-row total">
+            <span>Total</span>
+            <span id="total"></span>
+        </div>
+
+    </div>
+        <!-- Payment Method -->
+        <div class="section">
+
+            <h2>Payment Method</h2>
+
+            <p id="paymentMethod"></p>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+
+            <h3>Thank you for ordering from Oven2Door!</h3>
+
+            <p>We hope you enjoy your order.</p>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -70,11 +70,17 @@ export const routes: Routes = [
       },
 
       {
+        path: 'about-products',
+        loadComponent: () =>
+          import('./pages/about-products/about-products.page').then(
+            (m) => m.AboutProductsPage,
+          ),
+      },
+
+      {
         path: 'company',
         loadComponent: () =>
-          import('./customer/company/company.page').then(
-            (m) => m.CompanyPage,
-          ),
+          import('./customer/company/company.page').then((m) => m.CompanyPage),
       },
 
       {
@@ -139,9 +145,16 @@ export const routes: Routes = [
       ),
   },
 
-  // FALLBACK 
+  // FALLBACK
   {
     path: '**',
     redirectTo: 'login',
+  },
+  {
+    path: 'about-products',
+    loadComponent: () =>
+      import('./pages/about-products/about-products.page').then(
+        (m) => m.AboutProductsPage,
+      ),
   },
 ];

@@ -195,6 +195,7 @@ export class LayoutPage implements OnInit, OnDestroy {
 
             if (!snapshot.exists()) {
               this.loggedInUserName.set(fallbackName);
+              this.loggedInUserPhoto.set(user.photoURL || '');
               return;
             }
 
@@ -208,9 +209,12 @@ export class LayoutPage implements OnInit, OnDestroy {
             }
 
             const photo = userData['photoURL'];
-            if (typeof photo === 'string' && photo.trim()) {
-              this.loggedInUserPhoto.set(photo.trim());
-            }
+
+            this.loggedInUserPhoto.set(
+              typeof photo === 'string' && photo.trim()
+                ? photo.trim()
+                : user.photoURL || '',
+            );
           },
           (error) => {
             console.error('Layout: Profile listener error:', error);

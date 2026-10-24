@@ -27,8 +27,46 @@
 
       <div class="profile-card">
         <div class="profile-banner">
-          <div class="avatar">
-            <ion-icon name="person-outline"></ion-icon>
+          <!-- PROFILE PICTURE -->
+          <div class="avatar-container">
+            <div class="avatar">
+              <ion-spinner
+                *ngIf="profileImageUploading"
+                name="crescent"
+                class="avatar-spinner"
+              >
+              </ion-spinner>
+
+              <img
+                *ngIf="photoURL && !profileImageUploading"
+                [src]="photoURL"
+                alt="Profile Picture"
+                class="profile-image"
+              />
+
+              <ion-icon
+                *ngIf="!photoURL && !profileImageUploading"
+                name="person-outline"
+              >
+              </ion-icon>
+            </div>
+
+            <!-- CAMERA UPLOAD BUTTON -->
+            <label
+              class="upload-avatar"
+              [class.upload-disabled]="profileImageUploading"
+              title="Change profile picture"
+            >
+              <ion-icon name="camera-outline"></ion-icon>
+
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                [disabled]="profileImageUploading"
+                (change)="onProfileImageSelected($event)"
+                hidden
+              />
+            </label>
           </div>
 
           <div>

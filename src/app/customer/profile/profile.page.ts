@@ -20,6 +20,7 @@ import {
   homeOutline,
   checkmarkCircleOutline,
   closeOutline,
+  cameraOutline,
 } from 'ionicons/icons';
 
 import { Router } from '@angular/router';
@@ -68,6 +69,12 @@ export class ProfilePage implements OnInit, OnDestroy {
   lastName = '';
   email = '';
   phone = '';
+  // PROFILE PICTURE
+  photoURL = '';
+  profileImageUploading = false;
+
+  private readonly cloudName = 'xvz0vtbj';
+  private readonly uploadPreset = 'oven2door_profiles';
 
   loading = true;
   saving = false;
@@ -109,6 +116,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       homeOutline,
       checkmarkCircleOutline,
       closeOutline,
+      cameraOutline,
     });
   }
 
@@ -176,8 +184,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.firstName = data['firstName'] || '';
       this.lastName = data['lastName'] || '';
       this.email = auth.currentUser?.email || data['email'] || '';
-
       this.phone = data['phone'] || '';
+
+      this.photoURL = data['photoURL'] || auth.currentUser?.photoURL || '';
     } catch (error) {
       console.error('Profile loading error:', error);
 
@@ -566,6 +575,116 @@ export class ProfilePage implements OnInit, OnDestroy {
       console.error('Delete address error:', error);
 
       this.addressError = 'Unable to delete shipping address.';
+
+      this.cdr.detectChanges();
+    }
+  }
+  // =====================================
+  // PROFILE PICTURE
+  // =====================================
+
+  async onProfileImageSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    // Allowed image formats
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+    if (!allowedTypes.includes(file.type)) {
+      this.errorMessage = 'Please select a JPG, PNG, or WebP image.';
+
+      input.value = '';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    // Maximum 2 MB
+    const maxSize = 2 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      this.errorMessage = 'Profile picture must be 2 MB or smaller.';
+
+      input.value = '';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    const user = auth.currentUser;
+
+    if (!user) {
+      await this.router.navigateByUrl('/login');
+      return;
+    }
+
+    this.profileImageUploading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.cdr.detectChanges();
+
+    try {
+      const formData = new FormData();
+
+      formData.append('file', file);
+      formData.append('upload_preset', this.uploadPreset);
+
+      /*
+       * Gives each user a predictable filename.
+       * The Firebase UID itself is not secret.
+       */
+      formData.append('public_id', `profile_${user.uid}`);
+
+      const uploadUrl = `https://api.cloudinary.com/v1_1/${this.cloudName}/image/upload`;
+
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorResponse = await response.text();
+
+        console.error('Cloudinary upload failed:', errorResponse);
+
+        throw new Error('Cloudinary upload failed.');
+      }
+
+      const result = await response.json();
+
+      if (!result.secure_url) {
+        throw new Error('Cloudinary did not return an image URL.');
+      }
+
+      const newPhotoURL = result.secure_url;
+
+      // Save URL to Firestore
+      await updateDoc(doc(db, 'users', user.uid), {
+        photoURL: newPhotoURL,
+        updatedAt: serverTimestamp(),
+      });
+
+      // Also synchronize Firebase Authentication
+      await updateProfile(user, {
+        photoURL: newPhotoURL,
+      });
+
+      this.photoURL = newPhotoURL;
+
+      this.successMessage = 'Profile picture updated successfully!';
+    } catch (error) {
+      console.error('Profile picture upload error:', error);
+
+      this.errorMessage = 'Unable to upload your profile picture.';
+    } finally {
+      this.profileImageUploading = false;
+
+      // Allows selecting the same file again later
+      input.value = '';
 
       this.cdr.detectChanges();
     }

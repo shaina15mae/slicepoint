@@ -1,67 +1,129 @@
 <!-- SIDEBAR -->
 <ion-menu contentId="main-content" type="overlay">
   <ion-content>
-   <!-- PROFILE HEADER -->
-<div class="menu-header">
-  <div class="menu-avatar">
-    <ion-icon name="person-outline"></ion-icon>
-  </div>
-  <h2 class="menu-greeting">
-    Hello, {{ isLoggedIn() ? loggedInUserName() : 'Guest' }}
-  </h2>
-</div>
+    <!-- PROFILE HEADER -->
+
+    <!-- PROFILE HEADER -->
+    <div class="menu-header">
+      <div class="menu-avatar">
+        <img
+          *ngIf="loggedInUserPhoto()"
+          [src]="loggedInUserPhoto()"
+          alt="Profile Picture"
+          class="menu-profile-image"
+        />
+
+        <ion-icon *ngIf="!loggedInUserPhoto()" name="person-outline">
+        </ion-icon>
+      </div>
+
+      <h2 class="menu-greeting">
+        Hello, {{ isLoggedIn() ? loggedInUserName() : 'Guest' }}
+      </h2>
+    </div>
 
     <!-- MENU LIST -->
     <ion-list lines="none" class="menu-list">
       <ion-menu-toggle [autoHide]="false">
-        <ion-item routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" button detail="false">
+        <ion-item
+          routerLink="/home"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          button
+          detail="false"
+        >
           <ion-icon slot="start" name="home-outline"></ion-icon>
           <ion-label>Home</ion-label>
         </ion-item>
 
-        <ion-item routerLink="/menu" routerLinkActive="active" button detail="false">
+        <ion-item
+          routerLink="/menu"
+          routerLinkActive="active"
+          button
+          detail="false"
+        >
           <ion-icon slot="start" name="pizza-outline"></ion-icon>
           <ion-label>Menu</ion-label>
         </ion-item>
 
-        <ion-item routerLink="/order-tracking" routerLinkActive="active" button detail="false">
+        <ion-item
+          routerLink="/order-tracking"
+          routerLinkActive="active"
+          button
+          detail="false"
+        >
           <ion-icon slot="start" name="location-outline"></ion-icon>
           <ion-label>Order Tracking</ion-label>
         </ion-item>
 
-        <ion-item routerLink="/cart" routerLinkActive="active" button detail="false">
+        <ion-item
+          routerLink="/cart"
+          routerLinkActive="active"
+          button
+          detail="false"
+        >
           <ion-icon slot="start" name="cart-outline"></ion-icon>
           <ion-label>My Cart</ion-label>
         </ion-item>
 
-        <ion-item [routerLink]="isLoggedIn() ? '/wishlist' : '/login'" routerLinkActive="active" button detail="false">
+        <ion-item
+          [routerLink]="isLoggedIn() ? '/wishlist' : '/login'"
+          routerLinkActive="active"
+          button
+          detail="false"
+        >
           <ion-icon slot="start" name="heart-outline"></ion-icon>
           <ion-label>My Wishlist</ion-label>
         </ion-item>
 
-        <ion-item routerLink="/aboutapp" routerLinkActive="active" button detail="false">
+        <ion-item
+          routerLink="/aboutapp"
+          routerLinkActive="active"
+          button
+          detail="false"
+        >
           <ion-icon slot="start" name="phone-portrait-outline"></ion-icon>
           <ion-label>About App</ion-label>
         </ion-item>
 
-        <ion-item routerLink="/company" routerLinkActive="active" button detail="false">
+        <ion-item
+          routerLink="/company"
+          routerLinkActive="active"
+          button
+          detail="false"
+        >
           <ion-icon slot="start" name="business-outline"></ion-icon>
           <ion-label>About Company</ion-label>
         </ion-item>
 
-        <ion-item routerLink="/about-us" routerLinkActive="active" button detail="false">
+        <ion-item
+          routerLink="/about-us"
+          routerLinkActive="active"
+          button
+          detail="false"
+        >
           <ion-icon slot="start" name="information-circle-outline"></ion-icon>
           <ion-label>About Us</ion-label>
         </ion-item>
 
-        <ion-item routerLink="/faqs" routerLinkActive="active" button detail="false">
+        <ion-item
+          routerLink="/faqs"
+          routerLinkActive="active"
+          button
+          detail="false"
+        >
           <ion-icon slot="start" name="help-circle-outline"></ion-icon>
           <ion-label>FAQs</ion-label>
         </ion-item>
 
         <!-- LOGGED IN -->
         <ng-container *ngIf="isLoggedIn()">
-          <ion-item routerLink="/profile" routerLinkActive="active" button detail="false">
+          <ion-item
+            routerLink="/profile"
+            routerLinkActive="active"
+            button
+            detail="false"
+          >
             <ion-icon slot="start" name="person-outline"></ion-icon>
             <ion-label>My Account</ion-label>
           </ion-item>
